@@ -287,7 +287,7 @@ b_predictor: branch_predictor port map ( 	clk => clk, reset => reset,
 --	PC4_ID: el PC +4 de la instrucción que está en ID
 -- 	DirSalto_ID: la dirección de salto claculada en la etapa ID
 -- Inicialmente ponemos la señal de control (PCSrc) a 0 (¡es decir este procesador no salta nunca!), tenéis que diseñar vosotros la lógica que gestione bien esta señal.
-PCSrc <= "00"; 
+PCSrc <= "11" when saltar='1'else"00"; 
 muxPC: mux4_1 port map (Din0 => PC4, DIn1 => address_predicted, Din2 => PC4_ID, DIn3 => DirSalto_ID, ctrl => PCSrc, Dout => PC_in);
 -----------------------------------
 Mem_I: memoriaRAM_I PORT MAP (CLK => CLK, ADDR => PC_out, Din => cero, WE => '0', RE => '1', Dout => IR_in);
@@ -349,7 +349,7 @@ UC_seg: UC port map (IR_op_code => Op_code_ID, Branch => Branch, RegDst => RegDs
 -- Prediccion de saltos: Comprobar si había que saltar
 -- Ahora mismo sólo esta implementada la instrucción de salto BEQ. Si es una instrucción de salto y se activa la señal Z se debe saltar
 -- Si se añaden otras opciones (como BNE) hay que actualizar esto
-Saltar <= Branch AND Z;
+saltar <= Branch AND Z;
 ------------------------------------
 -- Prediccion de saltos: Comprobación de la predicción realizada:
 -- las señales están a cero. Tenéis que diseñar vosotros la lógica necesaria para cada caso
