@@ -248,7 +248,7 @@ COMPONENT Banco_MEM
         );
     END COMPONENT; 
 
-signal load_PC, RegWrite_ID, RegWrite_EX, RegWrite_MEM, RegWrite_WB, Z, Branch, RegDst_ID, RegDst_EX, ALUSrc_ID, ALUSrc_EX: std_logic;
+signal load_PC, RegWrite_ID, RegWrite_EX, RegWrite_MEM, RegWrite_WB, Z,cmp_eq,cmp_ne, Branch, RegDst_ID, RegDst_EX, ALUSrc_ID, ALUSrc_EX: std_logic;
 signal MemtoReg_ID, MemtoReg_EX, MemtoReg_MEM, MemtoReg_WB, MemWrite_ID, MemWrite_EX, MemWrite_MEM, MemRead_ID, MemRead_EX, MemRead_MEM: std_logic;
 signal PC_in, PC_out, four, cero, PC4, DirSalto_ID, IR_in, IR_ID, PC4_ID, inm_ext_EX, Mux_out, IR_bancoID_in : std_logic_vector(31 downto 0);
 signal BusW, BusA, BusB, BusA_EX, BusB_EX, BusB_MEM, inm_ext, inm_ext_x4, ALU_out_EX, ALU_out_MEM, ALU_out_WB, Mem_out, MDR, address_predicted, address_predicted_ID, branch_address_in : std_logic_vector(31 downto 0);
@@ -313,7 +313,13 @@ two_bits_shift: two_bits_shifter	port map (Din => inm_ext, Dout => inm_ext_x4);
 
 adder_dir: adder32 port map (Din0 => inm_ext_x4, Din1 => PC4_ID, Dout => DirSalto_ID);
 
-Z <= '1' when (busA=busB) else '0';
+cmp_eq <= '1' when (busA=busB) else '0';
+cmp_ne <= '0' when (busA=busB) else '1';
+with IR_ID(31 downto 26) select
+Z <= cmp_eq when "000100",
+	 cmp_ne when "000110",
+	 '0' when others;
+
 
 ------------------------------------
 -- Riesgos de datos: os damos las señales definidas, pero están todas a cero, debéis incluir el código identifica cada riesgo
