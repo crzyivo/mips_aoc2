@@ -8,3 +8,848 @@ z2
 !i10f 100
 cModel Technology
 dC:/Modeltech_pe_edu_10.4a/examples
+Eadder32
+Z0 w1554998818
+Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z2 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z3 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z5 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z6 dC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2
+Z7 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/adder32.vhd
+Z8 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/adder32.vhd
+l0
+L33
+Vez3M66R73icgd5;^1]n[o0
+!s100 FdnT[E<XL_UiCO?C2]0L[0
+Z9 OP;C;10.4a;61
+32
+Z10 !s110 1554998967
+!i10b 1
+Z11 !s108 1554998967.000000
+Z12 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/adder32.vhd|
+Z13 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/adder32.vhd|
+!i113 1
+Z14 o-work work -2002 -explicit -O0
+Z15 tExplicit 1
+Abehavioral
+R1
+R2
+R3
+R4
+R5
+DEx4 work 7 adder32 0 22 ez3M66R73icgd5;^1]n[o0
+l41
+L39
+V9Th@5ho2TokL`O:o?GOnS2
+!s100 6lRC`O=[EbJ`<@kAJ`3P^1
+R9
+32
+R10
+!i10b 1
+R11
+R12
+R13
+!i113 1
+R14
+R15
+Ealu
+R0
+R1
+R2
+R3
+R4
+R5
+R6
+Z16 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/ALU.vhd
+Z17 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/ALU.vhd
+l0
+L33
+V@RAaWJGEJU]dl42V5llc>2
+!s100 E`1`MV@OJiDZHNeDL6[b81
+R9
+32
+R10
+!i10b 1
+R11
+Z18 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/ALU.vhd|
+Z19 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/ALU.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R1
+R2
+R3
+R4
+R5
+DEx4 work 3 alu 0 22 @RAaWJGEJU]dl42V5llc>2
+l42
+L40
+V>=Hj8m1iN?O16iTEo8A]m2
+!s100 X[SimW`d>R`c<i=CA]RP[1
+R9
+32
+R10
+!i10b 1
+R11
+R18
+R19
+!i113 1
+R14
+R15
+Ebanco_ex
+R0
+R4
+R5
+R6
+Z20 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_EX.vhd
+Z21 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_EX.vhd
+l0
+L32
+VPHQ9:bXzkHW[n6_J00R:z2
+!s100 `?TbTYVKRW=MT_]UT2ng03
+R9
+32
+R10
+!i10b 1
+R11
+Z22 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_EX.vhd|
+Z23 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_EX.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 8 banco_ex 0 22 PHQ9:bXzkHW[n6_J00R:z2
+l68
+L66
+VX2=JiL4C3Sh^>QFC51AT93
+!s100 [6Li3?SOo^kUa^Ui9ijQ11
+R9
+32
+R10
+!i10b 1
+R11
+R22
+R23
+!i113 1
+R14
+R15
+Ebanco_id
+R0
+R4
+R5
+R6
+Z24 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_ID_predictor.vhd
+Z25 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_ID_predictor.vhd
+l0
+L8
+V[>N]9IWKER0Y`nd?Po9GG2
+!s100 56i:MCH7Yimh[JPjAdgQV3
+R9
+32
+R10
+!i10b 1
+R11
+Z26 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_ID_predictor.vhd|
+Z27 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_ID_predictor.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 8 banco_id 0 22 [>N]9IWKER0Y`nd?Po9GG2
+l25
+L23
+Vh10ceBBPV;S54ef7_=kTZ0
+!s100 WRLN@<QbgmA7lgMS1bRcl1
+R9
+32
+R10
+!i10b 1
+R11
+R26
+R27
+!i113 1
+R14
+R15
+Ebanco_mem
+R0
+R4
+R5
+R6
+Z28 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_MEM.vhd
+Z29 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_MEM.vhd
+l0
+L32
+Ve_BCiA06hX`X=P]Tane_g1
+!s100 ?USSIc9eczC<TE>;kaObE1
+R9
+32
+R10
+!i10b 1
+R11
+Z30 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_MEM.vhd|
+Z31 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_MEM.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 9 banco_mem 0 22 e_BCiA06hX`X=P]Tane_g1
+l54
+L52
+V@14DKN4R5m`n^;_f_[EgC1
+!s100 L3PLMMzSnSf5lMERo4k?l3
+R9
+32
+R10
+!i10b 1
+R11
+R30
+R31
+!i113 1
+R14
+R15
+Ebanco_wb
+R0
+R4
+R5
+R6
+Z32 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_WB.vhd
+Z33 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_WB.vhd
+l0
+L32
+V6eXcQE7zz02BL3aGi[<F>3
+!s100 Dj=ZgPh1G[ne]R]6kzWRW1
+R9
+32
+R10
+!i10b 1
+R11
+Z34 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_WB.vhd|
+Z35 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Banco_WB.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 8 banco_wb 0 22 6eXcQE7zz02BL3aGi[<F>3
+l49
+L47
+VjKQ4_CS6D4@Z@GMkAePmJ3
+!s100 ?^XIZeBV;I]WDim1HT2QW1
+R9
+32
+R10
+!i10b 1
+R11
+R34
+R35
+!i113 1
+R14
+R15
+Ebranch_predictor
+R0
+R4
+R5
+R6
+Z36 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/predictor_saltos.vhd
+Z37 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/predictor_saltos.vhd
+l0
+L8
+VOElW@3UDRTzQ3faF8NFSj2
+!s100 5LMm;[]Ri7L4UBW>F5??o0
+R9
+32
+Z38 !s110 1554998969
+!i10b 1
+Z39 !s108 1554998969.000000
+Z40 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/predictor_saltos.vhd|
+Z41 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/predictor_saltos.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 16 branch_predictor 0 22 OElW@3UDRTzQ3faF8NFSj2
+l26
+L22
+VZ@Xh5J3j1z:_o3PifccXF0
+!s100 23hDQl_5PgCf^HcRea2kF1
+R9
+32
+R38
+!i10b 1
+R39
+R40
+R41
+!i113 1
+R14
+R15
+Ebreg
+R0
+R3
+R2
+R4
+R5
+R6
+Z42 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/BReg.vhd
+Z43 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/BReg.vhd
+l0
+L36
+VVn_dFT2n6?o7C]gJBmjFh1
+!s100 _JHQejW;DO9M]5ihRHD:S1
+R9
+32
+Z44 !s110 1554998968
+!i10b 1
+Z45 !s108 1554998968.000000
+Z46 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/BReg.vhd|
+Z47 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/BReg.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R3
+R2
+R4
+R5
+DEx4 work 4 breg 0 22 Vn_dFT2n6?o7C]gJBmjFh1
+l55
+L50
+VI[Z5If8?9h6=Xi]DkI6@G2
+!s100 g5j38U]=Co;UeF7AK1FOz2
+R9
+32
+R44
+!i10b 1
+R45
+R46
+R47
+!i113 1
+R14
+R15
+Eext_signo
+R0
+R4
+R5
+R6
+Z48 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Ext_signo.vhd
+Z49 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Ext_signo.vhd
+l0
+L32
+VXf93dK=jfGbHU]2Ef7mDW1
+!s100 =jQT7hQEW^Q9VGDz6>Dnd0
+R9
+32
+R44
+!i10b 1
+R45
+Z50 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Ext_signo.vhd|
+Z51 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/Ext_signo.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 9 ext_signo 0 22 Xf93dK=jfGbHU]2Ef7mDW1
+l39
+L37
+Va5[d?zV7L`XBX<c7AmWfn0
+!s100 LK3IFGmMiXJPmL2zW;mXf2
+R9
+32
+R44
+!i10b 1
+R45
+R50
+R51
+!i113 1
+R14
+R15
+Ememoriaram_d
+R0
+R3
+R2
+R4
+R5
+R6
+Z52 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/memoriaRAM_ejemplo.vhd
+Z53 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/memoriaRAM_ejemplo.vhd
+l0
+L33
+VfFlDKazVPSkzX<390lJZJ0
+!s100 mMMNkR4IjQ>dUl6ZdTO3b1
+R9
+32
+R44
+!i10b 1
+R45
+Z54 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/memoriaRAM_ejemplo.vhd|
+Z55 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/memoriaRAM_ejemplo.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R3
+R2
+R4
+R5
+DEx4 work 12 memoriaram_d 0 22 fFlDKazVPSkzX<390lJZJ0
+l61
+L42
+VdH<>IaH:Sf:1WoA5e<zAj2
+!s100 `aSZ[@2W0fGQ]D0kZ]AZl0
+R9
+32
+R44
+!i10b 1
+R45
+R54
+R55
+!i113 1
+R14
+R15
+Ememoriaram_i
+Z56 w1556033253
+R3
+R2
+R4
+R5
+R6
+Z57 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/memoriaRAM_I_ejemplo_nops.vhd
+Z58 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/memoriaRAM_I_ejemplo_nops.vhd
+l0
+L32
+VYbZkhW9WoEbhnN`5@J6=`0
+!s100 Q@4V61X_V]:iAW=8FaYo:2
+R9
+32
+Z59 !s110 1556033260
+!i10b 1
+Z60 !s108 1556033260.000000
+Z61 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/memoriaRAM_I_ejemplo_nops.vhd|
+Z62 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/memoriaRAM_I_ejemplo_nops.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R3
+R2
+R4
+R5
+DEx4 work 12 memoriaram_i 0 22 YbZkhW9WoEbhnN`5@J6=`0
+l76
+L41
+VkU8aMm2hUN:JmFh@_2@U[0
+!s100 MI1Y[=4>_zD:2DmD3GLNZ3
+R9
+32
+R59
+!i10b 1
+R60
+R61
+R62
+!i113 1
+R14
+R15
+Emips_segmentado
+R0
+R4
+R5
+R6
+Z63 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/MIPs_predictor_incompleto.vhd
+Z64 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/MIPs_predictor_incompleto.vhd
+l0
+L17
+Ve<S3UnMGALX==76So=gmA3
+!s100 DJcDbJgiN<BoEZ@019[2E2
+R9
+32
+R44
+!i10b 1
+R45
+Z65 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/MIPs_predictor_incompleto.vhd|
+Z66 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/MIPs_predictor_incompleto.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 15 mips_segmentado 0 22 e<S3UnMGALX==76So=gmA3
+l263
+L23
+V^>Y1OoIZNX[j0N1zi:8MG3
+!s100 eoF[2S6>AjmCJjdUbij<j2
+R9
+32
+R44
+!i10b 1
+R45
+R65
+R66
+!i113 1
+R14
+R15
+Emux2_1
+R0
+R4
+R5
+R6
+Z67 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux2_1.vhd
+Z68 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux2_1.vhd
+l0
+L32
+V3ffz>_Pd`0UGm<RQ39N2<1
+!s100 [VRg3F0=o?Z:]Y[CCZJje0
+R9
+32
+R44
+!i10b 1
+R45
+Z69 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux2_1.vhd|
+Z70 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux2_1.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 6 mux2_1 0 22 3ffz>_Pd`0UGm<RQ39N2<1
+l41
+L39
+VmO@O?FljQV@CmH;ACBYgj1
+!s100 zIQT7B^e_I4Qli6JQET>o2
+R9
+32
+R44
+!i10b 1
+R45
+R69
+R70
+!i113 1
+R14
+R15
+Emux2_5bits
+R0
+R4
+R5
+R6
+Z71 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux2_6bits.vhd
+Z72 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux2_6bits.vhd
+l0
+L32
+VhCRR<1Cbl2c7k1]J0>8dM2
+!s100 GnzQIA<O?`7V;D;ZbXOiA0
+R9
+32
+R44
+!i10b 1
+R45
+Z73 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux2_6bits.vhd|
+Z74 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux2_6bits.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 10 mux2_5bits 0 22 hCRR<1Cbl2c7k1]J0>8dM2
+l41
+L39
+V[I3_:5o?GGJmF][39YDQA1
+!s100 =@Dj[OG[:JJ:5PSjamb5A3
+R9
+32
+R44
+!i10b 1
+R45
+R73
+R74
+!i113 1
+R14
+R15
+Emux4_1
+R0
+R4
+R5
+R6
+Z75 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux4_1.vhd
+Z76 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux4_1.vhd
+l0
+L32
+V9@bHkReO;BnoSl;<HR[bi3
+!s100 BQIO3X7:4P^HWdcH31;Ah0
+R9
+32
+R44
+!i10b 1
+R45
+Z77 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux4_1.vhd|
+Z78 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux4_1.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 6 mux4_1 0 22 9@bHkReO;BnoSl;<HR[bi3
+l43
+L41
+VTi_f=KH9H=[PhThfFBkcI3
+!s100 @MbWAi35T37I;^o2@7>W91
+R9
+32
+R44
+!i10b 1
+R45
+R77
+R78
+!i113 1
+R14
+R15
+Emux4_1_32bits
+R0
+R4
+R5
+R6
+Z79 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux4_1_32bits.vhd
+Z80 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux4_1_32bits.vhd
+l0
+L4
+V6d^O7`FCgJG1BW>[2WP>10
+!s100 eC]>Q3Z[89zBLkPeQ2Xj<1
+R9
+32
+R38
+!i10b 1
+R45
+Z81 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux4_1_32bits.vhd|
+Z82 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/mux4_1_32bits.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 13 mux4_1_32bits 0 22 6d^O7`FCgJG1BW>[2WP>10
+l13
+L12
+VPIWRB3OE3iGmK8J?U0zQ=0
+!s100 8bbIj9`VbVePPKl6mXQcJ1
+R9
+32
+R38
+!i10b 1
+R45
+R81
+R82
+!i113 1
+R14
+R15
+Ereg32
+R0
+R4
+R5
+R6
+Z83 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/reg32.vhd
+Z84 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/reg32.vhd
+l0
+L32
+Vcf]H1V:29^h=K6L<M069Z0
+!s100 <HMai90R3mC^aKcUA9KWa3
+R9
+32
+R38
+!i10b 1
+R39
+Z85 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/reg32.vhd|
+Z86 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/reg32.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 5 reg32 0 22 cf]H1V:29^h=K6L<M069Z0
+l42
+L40
+VJ[W1HBgTgP5n;DfYZgH?h1
+!s100 2oc5;CJQla>1DYNY;i5db3
+R9
+32
+R38
+!i10b 1
+R39
+R85
+R86
+!i113 1
+R14
+R15
+Etestbench
+Z87 w1554999121
+R1
+R4
+R5
+R6
+Z88 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/testbench_Mips.vhd
+Z89 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/testbench_Mips.vhd
+l0
+L8
+Vg`bIo^[QNjMFAZ2llZMI]3
+!s100 Ec=J8ej[]^]0>MMDSQbDH0
+R9
+32
+Z90 !s110 1556029078
+!i10b 1
+Z91 !s108 1556029078.000000
+Z92 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/testbench_Mips.vhd|
+Z93 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/testbench_Mips.vhd|
+!i113 1
+R14
+R15
+Abehavior
+R1
+R4
+R5
+DEx4 work 9 testbench 0 22 g`bIo^[QNjMFAZ2llZMI]3
+l25
+L11
+Vh`kTgjVS?LQACkU[5OMB43
+!s100 Z>Ek0F7UZ5VhiLl=^eIA]3
+R9
+32
+R90
+!i10b 1
+R91
+R92
+R93
+!i113 1
+R14
+R15
+Etwo_bits_shifter
+R0
+R4
+R5
+R6
+Z94 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/bits_shifter.vhd
+Z95 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/bits_shifter.vhd
+l0
+L32
+V>``KTYRlmPk@4izOeR>SC2
+!s100 deJGV>HE6>8?]PdW4eZi]0
+R9
+32
+R44
+!i10b 1
+R45
+Z96 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/bits_shifter.vhd|
+Z97 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/bits_shifter.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 16 two_bits_shifter 0 22 >``KTYRlmPk@4izOeR>SC2
+l39
+L37
+Vbj_^QdRmenNNW7b;[Wll]1
+!s100 i;0b?lmD0hmf`Rg0aMFK72
+R9
+32
+R44
+!i10b 1
+R45
+R96
+R97
+!i113 1
+R14
+R15
+Eua
+R0
+R4
+R5
+R6
+Z98 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/UA_incompleta.vhd
+Z99 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/UA_incompleta.vhd
+l0
+L14
+VV_z4L`O58ZG;X[69LGL4d2
+!s100 =56gT7ZTNW1WhkV52E;]M3
+R9
+32
+R38
+!i10b 1
+R39
+Z100 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/UA_incompleta.vhd|
+Z101 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/UA_incompleta.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+DEx4 work 2 ua 0 22 V_z4L`O58ZG;X[69LGL4d2
+l29
+L27
+VcY`I7gMm[RPWzH1hAa?LW3
+!s100 mk86?TJAf0if6>U>OzkBm2
+R9
+32
+R38
+!i10b 1
+R39
+R100
+R101
+!i113 1
+R14
+R15
+Euc
+Z102 w1556029798
+R4
+R5
+R6
+Z103 8C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/UC_Mips.vhd
+Z104 FC:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/UC_Mips.vhd
+l0
+L32
+V`lbSBnLNWE`^`bZQ9KI6Z0
+!s100 F^SKg:TNDPQB_ZQE2:Xg]3
+R9
+32
+R59
+!i10b 1
+R60
+Z105 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/UC_Mips.vhd|
+Z106 !s107 C:/Users/Ivo/Desktop/Material P1-20190401/fuentes mips incompleto/mips_aoc2/UC_Mips.vhd|
+!i113 1
+R14
+R15
+Abehavioral
+R4
+R5
+Z107 DEx4 work 2 uc 0 22 `lbSBnLNWE`^`bZQ9KI6Z0
+l49
+L47
+Z108 Vm:aBkbiWmU?7Q0C:QXXMg3
+Z109 !s100 LHPGM[mZ=D2SL7=mP1Yec0
+R9
+32
+R59
+!i10b 1
+R60
+R105
+R106
+!i113 1
+R14
+R15
