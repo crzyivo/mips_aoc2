@@ -283,11 +283,14 @@ b_predictor: branch_predictor port map ( 	clk => clk, reset => reset,
 -- Prediccion de saltos: MUX para elegir la próxima instrucción
 -- A este Mux le llegan 4 opciones: 
 -- 	PC4: PC actual +4
--- 	@address_predicted: la dirección de saltoque proporciona el predictor
+-- 	@address_predicted: la dirección de salto que proporciona el predictor
 --	PC4_ID: el PC +4 de la instrucción que está en ID
 -- 	DirSalto_ID: la dirección de salto claculada en la etapa ID
 -- Inicialmente ponemos la señal de control (PCSrc) a 0 (¡es decir este procesador no salta nunca!), tenéis que diseñar vosotros la lógica que gestione bien esta señal.
-PCSrc <= "11" when saltar='1'else"00"; 
+PCSrc <= "11" when saltar='1' AND prediction_error='1' else --Si hay que saltar pero ha fallado la prediccion, dir calculada en ID
+         "10" when saltar='0' AND predictor_error='1' else --Si no se salta (o es erronea) pero se ha predicho salto, volvemos a la ins siguiente PC4_ID
+         "01" when prediction_out='1' else --Se predice un salto, por lo que se carga el PC predicho
+         "00";  --No se esta saltando, avanzamos normal PC+4
 muxPC: mux4_1 port map (Din0 => PC4, DIn1 => address_predicted, Din2 => PC4_ID, DIn3 => DirSalto_ID, ctrl => PCSrc, Dout => PC_in);
 -----------------------------------
 Mem_I: memoriaRAM_I PORT MAP (CLK => CLK, ADDR => PC_out, Din => cero, WE => '0', RE => '1', Dout => IR_in);
@@ -353,13 +356,13 @@ saltar <= Branch AND Z;
 ------------------------------------
 -- Prediccion de saltos: Comprobación de la predicción realizada:
 -- las señales están a cero. Tenéis que diseñar vosotros la lógica necesaria para cada caso
-address_error <= '0';
-decission_error <= '0';
+address_error <= '1' when DirSalto_ID /= branch_address_out else '0';
+decission_error <= '1' when saltar /= prediction_out else '0' ;
 -- Ha habido un error si el predictor tomó la decisión contraria (decission error) o si se decidió saltar pero se saltó a una dirección incorrecta
-predictor_error <= '0';
+predictor_error <= '1' when Branch AND (decission_error OR address_error) else '0';
 -- Actualización del predictor: si la predicción fue errónea damos la orden de que se carguen los datos correctos
-update_predictor <= '0';
-prediction_in <= '0';
+update_predictor <= predictor_error;
+prediction_in <= saltar;
 branch_address_in <= DirSalto_ID;
 -------------------------------------------------------------------------				
 -- si la operación es aritmética (es decir: IR_ID(31 downto 26)= "000001") miro el campo funct
