@@ -29,7 +29,7 @@ use ieee.std_logic_unsigned.all;
 -- any Xilinx primitives in this code.
 --library UNISIM;
 --use UNISIM.VComponents.all;
--- Memoria RAM de 128 oalabras de 32 bits
+-- Memoria RAM de 128 palabras de 32 bits
 entity memoriaRAM_D is port (
 		  CLK : in std_logic;
 		  ADDR : in std_logic_vector (31 downto 0); --Dir 
