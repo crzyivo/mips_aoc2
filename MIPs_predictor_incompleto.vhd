@@ -287,8 +287,8 @@ b_predictor: branch_predictor port map ( 	clk => clk, reset => reset,
 --	PC4_ID: el PC +4 de la instrucción que está en ID
 -- 	DirSalto_ID: la dirección de salto claculada en la etapa ID
 -- Inicialmente ponemos la señal de control (PCSrc) a 0 (¡es decir este procesador no salta nunca!), tenéis que diseñar vosotros la lógica que gestione bien esta señal.
-PCSrc <= "11" when saltar='1' AND prediction_error='1' else --Si hay que saltar pero ha fallado la prediccion, dir calculada en ID
-         "10" when saltar='0' AND predictor_error='1' else --Si no se salta (o es erronea) pero se ha predicho salto, volvemos a la ins siguiente PC4_ID
+PCSrc <= "11" when (saltar='1' AND predictor_error='1') else --Si hay que saltar pero ha fallado la prediccion, dir calculada en ID
+         "10" when (saltar='0' AND predictor_error='1') else --Si no se salta (o es erronea) pero se ha predicho salto, volvemos a la ins siguiente PC4_ID
          "01" when prediction_ID='1' else --Se predice un salto, por lo que se carga el PC predicho
          "00";  --No se esta saltando, avanzamos normal PC+4
 muxPC: mux4_1 port map (Din0 => PC4, DIn1 => address_predicted, Din2 => PC4_ID, DIn3 => DirSalto_ID, ctrl => PCSrc, Dout => PC_in);
@@ -307,7 +307,7 @@ Banco_IF_ID: Banco_ID port map (	IR_in => IR_bancoID_in, PC4_in => PC4, clk => c
 ------------------------------------------Etapa ID-------------------------------------------------------------------
 --
 Register_bank: BReg PORT MAP (clk => clk, reset => reset, RA => IR_ID(25 downto 21), RB => IR_ID(20 downto 16), 
-                              RW => RW_WB, BusW => busW, RegWrite => RegWr ite_WB, 
+                              RW => RW_WB, BusW => busW, RegWrite => RegWrite_WB, 
                               BusA => BusA, BusB => BusB);
 
 sign_ext: Ext_signo port map (inm => IR_ID(15 downto 0), inm_ext => inm_ext);
@@ -359,7 +359,7 @@ saltar <= Branch AND Z;
 address_error <= '1' when DirSalto_ID /= address_predicted_ID else '0';
 decission_error <= '1' when saltar /= prediction_ID else '0' ;
 -- Ha habido un error si el predictor tomó la decisión contraria (decission error) o si se decidió saltar pero se saltó a una dirección incorrecta
-predictor_error <= '1' when Branch AND (decission_error OR address_error) else '0';
+predictor_error <= '1' when Branch='1' AND (decission_error='1' OR address_error='1') else '0';
 -- Actualización del predictor: si la predicción fue errónea damos la orden de que se carguen los datos correctos
 update_predictor <= predictor_error;
 prediction_in <= saltar;
