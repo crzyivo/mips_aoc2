@@ -43,17 +43,17 @@ type RamType is array(0 to 127) of std_logic_vector(31 downto 0);
 --RAM test prediccion, debe realizar 3 iteraciones, al finalizar guarda el resultado en la pos 4 (un 5)
 -- 	14010005 	LA R1, 5(R0)
 -- 	08020000	LW R2, 0(R0)
--- 	08050004	LW R5, 4(R0)
+-- 	0â€­8050004â€¬	LW R5, 4(R0)
 --  00000000	nop
 -- 	00000000	nop
 -- 	04221800	ADD R3, R2,R5
 -- 	00000000	nop
 -- 	00000000	nop
 -- 	0C030004	SW  R3, 4(R0)
--- 	1861FFF9	BNE R3,R1, dir0
+-- 	1861FFFA	BNE R3,R1, dir0
 -- 	0C030008	SW  R3, 8(R0)
 signal RAM : RamType := (  			X"14010005", X"08020000", X"08050004", X"00000000", X"00000000", X"04221800", X"00000000", X"00000000", -- posiciones 0,1,2,3,4,5,6,7
-									X"0C030004", X"1861FFF9", X"0C030008", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", --posicones 8,9,...
+									X"0C030004", X"1861FFFA", X"0C030008", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", --posicones 8,9,...
 									X"20000000", X"20000000", X"30018001", X"02AD6093", X"30008001", X"00000001", X"20000000", X"30002001",
 									X"00010900", X"20000000", X"30004000", X"5000102D", X"01000300", X"80000400", X"10000000", X"00000000",
 									X"00002000", X"00000000", X"00000000", X"00000002", X"00000000", X"00000000", X"00000000", X"00000002",
@@ -71,17 +71,17 @@ signal RAM : RamType := (  			X"14010005", X"08020000", X"08050004", X"00000000"
 signal dir_7:  std_logic_vector(6 downto 0); 
 begin
  
- dir_7 <= ADDR(8 downto 2); -- como la memoria es de 128 plalabras no usamos la dirección completa sino sólo 7 bits. Como se direccionan los bytes, pero damos palabras no usamos los 2 bits menos significativos
+ dir_7 <= ADDR(8 downto 2); -- como la memoria es de 128 plalabras no usamos la direcciÃ³n completa sino sÃ³lo 7 bits. Como se direccionan los bytes, pero damos palabras no usamos los 2 bits menos significativos
  process (CLK)
     begin
         if (CLK'event and CLK = '1') then
-            if (WE = '1') then -- sólo se escribe si WE vale 1
+            if (WE = '1') then -- sÃ³lo se escribe si WE vale 1
                 RAM(conv_integer(dir_7)) <= Din;
             end if;
         end if;
     end process;
 
-    Dout <= RAM(conv_integer(dir_7)) when (RE='1') else "00000000000000000000000000000000"; --sólo se lee si RE vale 1
+    Dout <= RAM(conv_integer(dir_7)) when (RE='1') else "00000000000000000000000000000000"; --sÃ³lo se lee si RE vale 1
 
 end Behavioral;
 
