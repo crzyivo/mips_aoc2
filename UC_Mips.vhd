@@ -52,11 +52,13 @@ begin
 UC_mux : process (IR_op_code)
 begin 
 	CASE IR_op_code IS
-		 WHEN  "000000"  =>  Branch <= '0'; RegDst <= '0'; ALUSrc <= '0'; MemWrite <= '0'; MemRead <= '0'; MemtoReg <= '0'; RegWrite <= '0'; Update_Rs <= '0'; FP_add <= '0';
-		 WHEN  "000001"  =>  Branch <= '0'; RegDst <= '1'; ALUSrc <= '0'; MemWrite <= '0'; MemRead <= '0'; MemtoReg <= '0'; RegWrite <= '1'; Update_Rs <= '0'; FP_add <= '0';
-		 WHEN  "000010"  =>  Branch <= '0'; RegDst <= '0'; ALUSrc <= '1'; MemWrite <= '0'; MemRead <= '1'; MemtoReg <= '1'; RegWrite <= '1'; Update_Rs <= '0'; FP_add <= '0';
-		 WHEN  "000011"  =>  Branch <= '0'; RegDst <= '0'; ALUSrc <= '1'; MemWrite <= '1'; MemRead <= '0'; MemtoReg <= '0'; RegWrite <= '0'; Update_Rs <= '0'; FP_add <= '0';
-		 WHEN  "000100"  =>  Branch <= '1'; RegDst <= '0'; ALUSrc <= '0'; MemWrite <= '0'; MemRead <= '0'; MemtoReg <= '0'; RegWrite <= '0'; Update_Rs <= '0'; FP_add <= '0';
+		 WHEN  "000000"  =>  Branch <= '0'; RegDst <= '0'; ALUSrc <= '0'; MemWrite <= '0'; MemRead <= '0'; MemtoReg <= '0'; RegWrite <= '0'; Update_Rs <= '0'; FP_add <= '0'; --nop
+		 WHEN  "000001"  =>  Branch <= '0'; RegDst <= '1'; ALUSrc <= '0'; MemWrite <= '0'; MemRead <= '0'; MemtoReg <= '0'; RegWrite <= '1'; Update_Rs <= '0'; FP_add <= '0'; --add
+		 WHEN  "000010"  =>  Branch <= '0'; RegDst <= '0'; ALUSrc <= '1'; MemWrite <= '0'; MemRead <= '1'; MemtoReg <= '1'; RegWrite <= '1'; Update_Rs <= '0'; FP_add <= '0'; --lw
+		 WHEN  "000011"  =>  Branch <= '0'; RegDst <= '0'; ALUSrc <= '1'; MemWrite <= '1'; MemRead <= '0'; MemtoReg <= '0'; RegWrite <= '0'; Update_Rs <= '0'; FP_add <= '0'; --sw
+		 WHEN  "000100"  =>  Branch <= '1'; RegDst <= '0'; ALUSrc <= '0'; MemWrite <= '0'; MemRead <= '0'; MemtoReg <= '0'; RegWrite <= '0'; Update_Rs <= '0'; FP_add <= '0'; --beq
+		 WHEN  "000101"  =>  Branch <= '0'; RegDst <= '0'; ALUSrc <= '1'; MemWrite <= '0'; MemRead <= '0'; MemtoReg <= '0'; RegWrite <= '1'; Update_Rs <= '0'; FP_add <= '0'; --la
+		 WHEN  "000110"  =>  Branch <= '1'; RegDst <= '0'; ALUSrc <= '0'; MemWrite <= '0'; MemRead <= '0'; MemtoReg <= '0'; RegWrite <= '0'; Update_Rs <= '0'; FP_add <= '0'; --bne
 		 WHEN  OTHERS 	  => Branch <= '0'; RegDst <= '0'; ALUSrc <= '0'; MemWrite <= '0'; MemRead <= '0'; MemtoReg <= '0'; RegWrite <= '0'; Update_Rs <= '0'; FP_add <= '0';
 	  END CASE;
 end process;

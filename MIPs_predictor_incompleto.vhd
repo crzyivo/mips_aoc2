@@ -248,7 +248,7 @@ COMPONENT Banco_MEM
         );
     END COMPONENT; 
 
-signal load_PC, RegWrite_ID, RegWrite_EX, RegWrite_MEM, RegWrite_WB, Z, Branch, RegDst_ID, RegDst_EX, ALUSrc_ID, ALUSrc_EX: std_logic;
+signal load_PC, RegWrite_ID, RegWrite_EX, RegWrite_MEM, RegWrite_WB, Z,cmp_eq,cmp_ne, Branch, RegDst_ID, RegDst_EX, ALUSrc_ID, ALUSrc_EX: std_logic;
 signal MemtoReg_ID, MemtoReg_EX, MemtoReg_MEM, MemtoReg_WB, MemWrite_ID, MemWrite_EX, MemWrite_MEM, MemRead_ID, MemRead_EX, MemRead_MEM: std_logic;
 signal PC_in, PC_out, four, cero, PC4, DirSalto_ID, IR_in, IR_ID, PC4_ID, inm_ext_EX, Mux_out, IR_bancoID_in : std_logic_vector(31 downto 0);
 signal BusW, BusA, BusB, BusA_EX, BusB_EX, BusB_MEM, inm_ext, inm_ext_x4, ALU_out_EX, ALU_out_MEM, ALU_out_WB, Mem_out, MDR, address_predicted, address_predicted_ID, branch_address_in : std_logic_vector(31 downto 0);
@@ -287,7 +287,7 @@ b_predictor: branch_predictor port map ( 	clk => clk, reset => reset,
 --	PC4_ID: el PC +4 de la instrucción que está en ID
 -- 	DirSalto_ID: la dirección de salto claculada en la etapa ID
 -- Inicialmente ponemos la señal de control (PCSrc) a 0 (¡es decir este procesador no salta nunca!), tenéis que diseñar vosotros la lógica que gestione bien esta señal.
-PCSrc <= "00"; 
+PCSrc <= "11" when saltar='1'else"00"; 
 muxPC: mux4_1 port map (Din0 => PC4, DIn1 => address_predicted, Din2 => PC4_ID, DIn3 => DirSalto_ID, ctrl => PCSrc, Dout => PC_in);
 -----------------------------------
 Mem_I: memoriaRAM_I PORT MAP (CLK => CLK, ADDR => PC_out, Din => cero, WE => '0', RE => '1', Dout => IR_in);
@@ -313,14 +313,19 @@ two_bits_shift: two_bits_shifter	port map (Din => inm_ext, Dout => inm_ext_x4);
 
 adder_dir: adder32 port map (Din0 => inm_ext_x4, Din1 => PC4_ID, Dout => DirSalto_ID);
 
-Z <= '1' when (busA=busB) else '0';
+cmp_eq <= '1' when (busA=busB) else '0';
+cmp_ne <= '0' when (busA=busB) else '1';
+with IR_ID(31 downto 26) select
+Z <= cmp_eq when "000100",
+	 cmp_ne when "000110",
+	 '0' when others;
+
 
 ------------------------------------
 -- Riesgos de datos: os damos las señales definidas, pero están todas a cero, debéis incluir el código identifica cada riesgo
 -- Detectar lw/uso: 
-riesgo_rs_lw_uso <= '0';
-riesgo_rt_lw_uso <= '0'; 
-
+riesgo_rs_lw_uso <= '0' when IR_ID(31 downto 26)="000000" else '1' when RW_EX=IR_ID(25 downto 21) AND RW_MEM=IR_ID(25 downto 21) else '0';
+riesgo_rt_lw_uso <= '0' when IR_ID(31 downto 26)="000000" else '1' when RW_EX=IR_ID(20 downto 16) AND RW_MEM= IR_ID(20 downto 16) else '0'; 
 riesgo_lw_uso <= riesgo_rs_lw_uso or riesgo_rt_lw_uso;
 
 -- Detectar riesgos en los beq: 
@@ -331,7 +336,7 @@ riesgo_beq_rt_d2 <= '0';
 
 riesgo_beq <= riesgo_beq_rs_d1 or riesgo_beq_rs_d2 or riesgo_beq_rt_d1 or riesgo_beq_rt_d2;
 -- en función de los riesgos se para o se permite continuar a la instrucción en ID
-avanzar_ID <= '1';
+avanzar_ID <= NOT riesgo_lw_uso AND NOT riesgo_beq;
 -- Envío de instrucción a EX. Adoptamos una solución sencilla, si hay que parar pasamos hacia adelante las señales de control de una nop
 Op_code_ID <= IR_ID(31 downto 26) when avanzar_ID='1' else "000000";
 ------------------------------------------------------------
@@ -343,7 +348,7 @@ UC_seg: UC port map (IR_op_code => Op_code_ID, Branch => Branch, RegDst => RegDs
 -- Prediccion de saltos: Comprobar si había que saltar
 -- Ahora mismo sólo esta implementada la instrucción de salto BEQ. Si es una instrucción de salto y se activa la señal Z se debe saltar
 -- Si se añaden otras opciones (como BNE) hay que actualizar esto
-Saltar <= Branch AND Z;
+saltar <= Branch AND Z;
 ------------------------------------
 -- Prediccion de saltos: Comprobación de la predicción realizada:
 -- las señales están a cero. Tenéis que diseñar vosotros la lógica necesaria para cada caso
