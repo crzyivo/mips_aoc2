@@ -4,7 +4,7 @@
 -- 
 -- Create Date:    10:38:16 04/08/2014 
 -- Design Name: 
--- Module Name:    memoriaRAM_I - Behavioral 
+-- Module Name:    memoriaRAM_I_pred_sentido_nops - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,29 +29,32 @@ use ieee.std_logic_unsigned.all;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity memoriaRAM_I is port (
+entity memoriaRAM_I_pred_sentido_nops is port (
 		  CLK : in std_logic;
 		  ADDR : in std_logic_vector (31 downto 0); --Dir 
         Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
         WE : in std_logic;		-- write enable	
 		  RE : in std_logic;		-- read enable		  
 		  Dout : out std_logic_vector (31 downto 0));
-end memoriaRAM_I;
+end memoriaRAM_I_pred_sentido_nops;
 
-architecture Behavioral of memoriaRAM_I is
+architecture Behavioral of memoriaRAM_I_pred_sentido_nops is
 type RamType is array(0 to 127) of std_logic_vector(31 downto 0);
---RAM de ejemplo
---  Ejemplo inicial, al ser salto retardado con el predictor nunca sale del bucle
---	08010000	LW  R1, 0(R0)
---	09020004	LW  R2, 4(R8)
---	00000000	nop
---	00000000	nop
--- 	04221800	ADD R3, R1, R2
---	00000000	nop
---	1063FFF9	beq r0, r0, dir0
---	0C830004	SW  R3, 4(R4)
-signal RAM : RamType := (  			X"08010000", X"09020004", X"00000000", X"00000000", X"04221800", X"00000000", X"1063FFF9", X"0C830004", -- posiciones 0,1,2,3,4,5,6,7
-									X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", --posicones 8,9,...
+--RAM test prediccion, debe realizar 3 iteraciones, al finalizar guarda el resultado en la pos 4 (un 5)
+-- Comprueba el fallo de prediccion de sentido
+-- 	20210005 	LA R1, 5(R0)
+-- 	08020000	LW R2, 0(R0) //dir1
+-- 	08050004	LW R5, 4(R0)
+--  00000000	nop
+-- 	00000000	nop
+-- 	04451800	ADD R3, R2,R5
+-- 	00000000	nop
+-- 	00000000	nop
+-- 	0C030004	SW  R3, 4(R0)
+-- 	1461FFF7	BNE R3,R1, dir1
+-- 	0C030008	SW  R3, 8(R0)
+signal RAM : RamType := (  			X"20210005", X"08020000", X"08050004", X"00000000", X"00000000", X"04451800", X"00000000", X"00000000", -- posiciones 0,1,2,3,4,5,6,7
+									X"0C030004", X"1461FFF7", X"0C030008", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", --posicones 8,9,...
 									X"20000000", X"20000000", X"30018001", X"02AD6093", X"30008001", X"00000001", X"20000000", X"30002001",
 									X"00010900", X"20000000", X"30004000", X"5000102D", X"01000300", X"80000400", X"10000000", X"00000000",
 									X"00002000", X"00000000", X"00000000", X"00000002", X"00000000", X"00000000", X"00000000", X"00000002",
