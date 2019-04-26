@@ -35,10 +35,11 @@ begin
 --MUX_ctrl_A <= "00";
 --MUX_ctrl_B <= "00";	
 -- Solucion
-Corto_A_Mem <= '0';
-Corto_B_Mem <= '0';
-Corto_A_WB	<= '0';
-Corto_B_WB	<= '0';
-MUX_ctrl_A <= 	"00";
-MUX_ctrl_B <= 	"00";	
+Corto_A_Mem <= '1' when ((Reg_Rs_Ex = RW_MEM) AND (RegWrite_MEM = '1')) else '0';
+Corto_B_Mem <= '1' when ((Reg_Rt_Ex = RW_MEM AND RegWrite_MEM = '1')) else '0';
+Corto_A_WB	<= '1' when ((Reg_Rs_Ex = RW_WB AND RegWrite_WB = '1')) else '0';
+Corto_B_WB	<= '1' when ((Reg_Rt_Ex = RW_WB AND RegWrite_WB = '1')) else '0';
+MUX_ctrl_A <= 	"01" when ((Reg_Rs_Ex = RW_MEM) AND (RegWrite_MEM = '1')) else "10" when ((Reg_Rs_Ex = RW_WB) AND (RegWrite_WB = '1')) else "00";
+MUX_ctrl_B <= 	"01" when ((Reg_Rt_Ex = RW_MEM) AND (RegWrite_MEM = '1')) 
+			else "10" when ((Reg_Rt_Ex = RW_WB) AND (RegWrite_WB = '1')) else "00";	
 end Behavioral;
