@@ -48,7 +48,7 @@ type RamType is array(0 to 127) of std_logic_vector(31 downto 0);
 --	00000000	nop
 -- 	04221800	ADD R3, R1, R2
 --	00000000	nop
---	1063FFF9	beq r0, r0, dir0
+--	1063FFF9	beq r3, r3, dir0
 --	0C830004	SW  R3, 4(R4)
 signal RAM : RamType := (  			X"08010000", X"09020004", X"00000000", X"00000000", X"04221800", X"00000000", X"1063FFF9", X"0C830004", -- posiciones 0,1,2,3,4,5,6,7
 									X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", --posicones 8,9,...
