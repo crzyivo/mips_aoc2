@@ -84,6 +84,42 @@ component memoriaRAM_I is port (
 		Dout : out std_logic_vector (31 downto 0));
 end component;
 
+component memoriaRAM_I_full is port (
+		CLK : in std_logic;
+		ADDR : in std_logic_vector (31 downto 0); --Dir 
+        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
+        WE : in std_logic;		-- write enable	
+		RE : in std_logic;		-- read enable		  
+		Dout : out std_logic_vector (31 downto 0));
+end component;
+
+component memoriaRAM_I_bne_nops is port (
+		CLK : in std_logic;
+		ADDR : in std_logic_vector (31 downto 0); --Dir 
+        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
+        WE : in std_logic;		-- write enable	
+		RE : in std_logic;		-- read enable		  
+		Dout : out std_logic_vector (31 downto 0));
+end component;
+
+component memoriaRAM_I_la_nops is port (
+		CLK : in std_logic;
+		ADDR : in std_logic_vector (31 downto 0); --Dir 
+        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
+        WE : in std_logic;		-- write enable	
+		RE : in std_logic;		-- read enable		  
+		Dout : out std_logic_vector (31 downto 0));
+end component;
+
+component memoriaRAM_I_pred_sentido_nops is port (
+		CLK : in std_logic;
+		ADDR : in std_logic_vector (31 downto 0); --Dir 
+        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
+        WE : in std_logic;		-- write enable	
+		RE : in std_logic;		-- read enable		  
+		Dout : out std_logic_vector (31 downto 0));
+end component;
+
 component Banco_ID is
  Port ( IR_in : in  STD_LOGIC_VECTOR (31 downto 0); -- instrucción leida en IF
         PC4_in:  in  STD_LOGIC_VECTOR (31 downto 0); -- PC+4 sumado en IF
@@ -253,7 +289,8 @@ signal MemtoReg_ID, MemtoReg_EX, MemtoReg_MEM, MemtoReg_WB, MemWrite_ID, MemWrit
 signal PC_in, PC_out, four, cero, PC4, DirSalto_ID, IR_in, IR_ID, PC4_ID, inm_ext_EX, Mux_out, IR_bancoID_in : std_logic_vector(31 downto 0);
 signal BusW, BusA, BusB, BusA_EX, BusB_EX, BusB_MEM, inm_ext, inm_ext_x4, ALU_out_EX, ALU_out_MEM, ALU_out_WB, Mem_out, MDR, address_predicted, address_predicted_ID, branch_address_in : std_logic_vector(31 downto 0);
 signal prediction, prediction_in, update_predictor, prediction_ID, predictor_error, address_error, decission_error, saltar : std_logic;
-signal riesgo_beq, riesgo_beq_rt_d2, riesgo_beq_rt_d1, riesgo_beq_rs_d2, riesgo_beq_rs_d1, riesgo_lw_uso, riesgo_rt_lw_uso, riesgo_rs_lw_uso, avanzar_ID: std_logic;
+signal riesgo_beq, riesgo_beq_rt_d2, riesgo_beq_rt_d1, riesgo_beq_rs_d2, riesgo_beq_rs_d1,riesgo_bne, riesgo_bne_rt_d2, riesgo_bne_rt_d1, riesgo_bne_rs_d2, riesgo_bne_rs_d1,
+	   riesgo_lw_uso, riesgo_rt_lw_uso, riesgo_rs_lw_uso, avanzar_ID: std_logic;
 signal RW_EX, RW_MEM, RW_WB, Reg_Rd_EX, Reg_Rt_EX, Reg_Rs_EX: std_logic_vector(4 downto 0);
 signal ALUctrl_ID, ALUctrl_EX : std_logic_vector(2 downto 0);
 signal Op_code_ID: std_logic_vector(5 downto 0);
@@ -293,7 +330,7 @@ PCSrc <= "11" when (saltar='1' AND predictor_error='1') else --Si hay que saltar
          "00";  --No se esta saltando o la prediccion era correcta, avanzamos normal PC+4
 muxPC: mux4_1 port map (Din0 => PC4, DIn1 => address_predicted, Din2 => PC4_ID, DIn3 => DirSalto_ID, ctrl => PCSrc, Dout => PC_in);
 -----------------------------------
-Mem_I: memoriaRAM_I PORT MAP (CLK => CLK, ADDR => PC_out, Din => cero, WE => '0', RE => '1', Dout => IR_in);
+Mem_I: memoriaRAM_I_full PORT MAP (CLK => CLK, ADDR => PC_out, Din => cero, WE => '0', RE => '1', Dout => IR_in);
 --------------------------------------------------------------
 -- Prediccion de saltos: Anulación de la instrucción. Si en ID se detecta un error la instrucción que se acaba de leer se anula. Para ello se sustituye su código por el de una nop
 -- La siguiente línea es un mux descrito de forma funcional
@@ -340,9 +377,19 @@ riesgo_beq_rt_d1 <= '1' when (IR_ID(31 downto 26)="000100" AND RW_EX=IR_ID(20 do
 riesgo_beq_rt_d2 <= '1' when (IR_ID(31 downto 26)="000100" AND RW_MEM=IR_ID(20 downto 16) AND RegWrite_MEM='1') else '0';
 
 riesgo_beq <= riesgo_beq_rs_d1 or riesgo_beq_rs_d2 or riesgo_beq_rt_d1 or riesgo_beq_rt_d2;
+
+-- Detectar riesgos en los bne:
+riesgo_bne_rs_d1 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_EX=IR_ID(25 downto 21) AND RegWrite_EX='1') else '0';
+riesgo_bne_rs_d2 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_MEM=IR_ID(25 downto 21) AND RegWrite_MEM='1') else '0';
+riesgo_bne_rt_d1 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_EX=IR_ID(20 downto 16) AND RegWrite_EX='1') else '0';
+riesgo_bne_rt_d2 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_MEM=IR_ID(20 downto 16) AND RegWrite_MEM='1') else '0';
+
+riesgo_bne <= riesgo_bne_rs_d1 or riesgo_bne_rs_d2 or riesgo_bne_rt_d1 or riesgo_bne_rt_d2;
+
 -- en función de los riesgos se para o se permite continuar a la instrucción en ID
-avanzar_ID <= '0' WHEN riesgo_lw_uso='1' else
+avanzar_ID <= '0' when riesgo_lw_uso='1' else
 			 '0' when riesgo_beq='1' else
+			 '0' when riesgo_bne='1' else
 			 '1';
 -- Envío de instrucción a EX. Adoptamos una solución sencilla, si hay que parar pasamos hacia adelante las señales de control de una nop
 Op_code_ID <= IR_ID(31 downto 26) when avanzar_ID='1' else "000000";
