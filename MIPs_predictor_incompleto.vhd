@@ -290,7 +290,7 @@ b_predictor: branch_predictor port map ( 	clk => clk, reset => reset,
 PCSrc <= "11" when (saltar='1' AND predictor_error='1') else --Si hay que saltar pero ha fallado la prediccion, dir calculada en ID
          "10" when (saltar='0' AND predictor_error='1') else --Si no se salta (o es erronea) pero se ha predicho salto, volvemos a la ins siguiente PC4_ID
          "01" when prediction='1' else --Se predice un salto, por lo que se carga el PC predicho
-         "00";  --No se esta saltando, avanzamos normal PC+4
+         "00";  --No se esta saltando o la prediccion era correcta, avanzamos normal PC+4
 muxPC: mux4_1 port map (Din0 => PC4, DIn1 => address_predicted, Din2 => PC4_ID, DIn3 => DirSalto_ID, ctrl => PCSrc, Dout => PC_in);
 -----------------------------------
 Mem_I: memoriaRAM_I PORT MAP (CLK => CLK, ADDR => PC_out, Din => cero, WE => '0', RE => '1', Dout => IR_in);
