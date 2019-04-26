@@ -302,7 +302,7 @@ IR_bancoID_in(25 downto 0) <= IR_in(25 downto 0);
 -----------------------------------------------------------------
 -- hay que mandar la info de la predicción a la etapa ID para poder comprobar si ha sido acierto o fallo para ello añadimos dos registros al banco: dirección (address_predicted que es la dirección que hemos metido en la entrada del PC) y decisión (prediction_out)
 Banco_IF_ID: Banco_ID port map (	IR_in => IR_bancoID_in, PC4_in => PC4, clk => clk, reset => reset, load => avanzar_ID, IR_ID => IR_ID, PC4_ID => PC4_ID,
-									address_predicted => PC_in, prediction => prediction, address_predicted_ID => address_predicted_ID, prediction_ID => prediction_ID );
+									address_predicted => address_predicted, prediction => prediction, address_predicted_ID => address_predicted_ID, prediction_ID => prediction_ID );
 --
 ------------------------------------------Etapa ID-------------------------------------------------------------------
 --
