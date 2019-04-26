@@ -102,6 +102,15 @@ component memoriaRAM_I_bne_nops is port (
 		Dout : out std_logic_vector (31 downto 0));
 end component;
 
+component memoriaRAM_I_bne is port (
+		CLK : in std_logic;
+		ADDR : in std_logic_vector (31 downto 0); --Dir 
+        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
+        WE : in std_logic;		-- write enable	
+		RE : in std_logic;		-- read enable		  
+		Dout : out std_logic_vector (31 downto 0));
+end component;
+
 component memoriaRAM_I_la_nops is port (
 		CLK : in std_logic;
 		ADDR : in std_logic_vector (31 downto 0); --Dir 
@@ -111,7 +120,25 @@ component memoriaRAM_I_la_nops is port (
 		Dout : out std_logic_vector (31 downto 0));
 end component;
 
+component memoriaRAM_I_la is port (
+		CLK : in std_logic;
+		ADDR : in std_logic_vector (31 downto 0); --Dir 
+        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
+        WE : in std_logic;		-- write enable	
+		RE : in std_logic;		-- read enable		  
+		Dout : out std_logic_vector (31 downto 0));
+end component;
+
 component memoriaRAM_I_pred_sentido_nops is port (
+		CLK : in std_logic;
+		ADDR : in std_logic_vector (31 downto 0); --Dir 
+        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
+        WE : in std_logic;		-- write enable	
+		RE : in std_logic;		-- read enable		  
+		Dout : out std_logic_vector (31 downto 0));
+end component;
+
+component memoriaRAM_I_pred_sentido is port (
 		CLK : in std_logic;
 		ADDR : in std_logic_vector (31 downto 0); --Dir 
         Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
@@ -330,7 +357,8 @@ PCSrc <= "11" when (saltar='1' AND predictor_error='1') else --Si hay que saltar
          "00";  --No se esta saltando o la prediccion era correcta, avanzamos normal PC+4
 muxPC: mux4_1 port map (Din0 => PC4, DIn1 => address_predicted, Din2 => PC4_ID, DIn3 => DirSalto_ID, ctrl => PCSrc, Dout => PC_in);
 -----------------------------------
-Mem_I: memoriaRAM_I_full PORT MAP (CLK => CLK, ADDR => PC_out, Din => cero, WE => '0', RE => '1', Dout => IR_in);
+--Cambiar esta linea por la memoria de instrucciones del test
+Mem_I: memoriaRAM_I_pred_sentido PORT MAP (CLK => CLK, ADDR => PC_out, Din => cero, WE => '0', RE => '1', Dout => IR_in); 
 --------------------------------------------------------------
 -- Prediccion de saltos: Anulación de la instrucción. Si en ID se detecta un error la instrucción que se acaba de leer se anula. Para ello se sustituye su código por el de una nop
 -- La siguiente línea es un mux descrito de forma funcional
