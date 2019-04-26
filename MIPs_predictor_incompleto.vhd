@@ -292,7 +292,6 @@ PCSrc <= "11" when (saltar='1' AND predictor_error='1') else --Si hay que saltar
          "01" when prediction='1' else --Se predice un salto, por lo que se carga el PC predicho
          "00";  --No se esta saltando o la prediccion era correcta, avanzamos normal PC+4
 muxPC: mux4_1 port map (Din0 => PC4, DIn1 => address_predicted, Din2 => PC4_ID, DIn3 => DirSalto_ID, ctrl => PCSrc, Dout => PC_in);
-muxPC: mux4_1 port map (Din0 => PC4, DIn1 => address_predicted, Din2 => PC4_ID, DIn3 => DirSalto_ID, ctrl => PCSrc, Dout => PC_in);
 -----------------------------------
 Mem_I: memoriaRAM_I PORT MAP (CLK => CLK, ADDR => PC_out, Din => cero, WE => '0', RE => '1', Dout => IR_in);
 --------------------------------------------------------------
