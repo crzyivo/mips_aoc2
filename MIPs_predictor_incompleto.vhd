@@ -324,7 +324,9 @@ Z <= cmp_eq when "000100",
 ------------------------------------
 -- Riesgos de datos: os damos las señales definidas, pero están todas a cero, debéis incluir el código identifica cada riesgo
 -- Detectar lw/uso: 
-riesgo_rs_lw_uso <= '0' when IR_ID(31 downto 26)="000000" else '1' when MemRead_EX='1' AND RW_EX=IR_ID(25 downto 21) else '0';
+riesgo_rs_lw_uso <= '0' when (IR_ID(31 downto 26)="000000")
+			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(25 downto 21))
+			else '0';
 riesgo_rt_lw_uso <= '0' when IR_ID(31 downto 26)="000000" else '1' when MemRead_EX='1' AND RW_EX=IR_ID(20 downto 16) else '0'; 
 riesgo_lw_uso <= riesgo_rs_lw_uso or riesgo_rt_lw_uso;
 
@@ -336,7 +338,7 @@ riesgo_beq_rt_d2 <= '0';
 
 riesgo_beq <= riesgo_beq_rs_d1 or riesgo_beq_rs_d2 or riesgo_beq_rt_d1 or riesgo_beq_rt_d2;
 -- en función de los riesgos se para o se permite continuar a la instrucción en ID
-avanzar_ID <= NOT riesgo_lw_uso AND NOT riesgo_beq;
+avanzar_ID <= NOT(riesgo_lw_uso) AND NOT(riesgo_beq);
 -- Envío de instrucción a EX. Adoptamos una solución sencilla, si hay que parar pasamos hacia adelante las señales de control de una nop
 Op_code_ID <= IR_ID(31 downto 26) when avanzar_ID='1' else "000000";
 ------------------------------------------------------------
