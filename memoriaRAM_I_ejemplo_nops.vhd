@@ -40,20 +40,17 @@ end memoriaRAM_I;
 
 architecture Behavioral of memoriaRAM_I is
 type RamType is array(0 to 127) of std_logic_vector(31 downto 0);
---RAM test prediccion, debe realizar 3 iteraciones, al finalizar guarda el resultado en la pos 4 (un 5)
--- 	14010005 	LA R1, 5(R0)
--- 	08020000	LW R2, 0(R0)
--- 	0‭8050004‬	LW R5, 4(R0)
---  00000000	nop
--- 	00000000	nop
--- 	04451800	ADD R3, R2,R5
--- 	00000000	nop
--- 	00000000	nop
--- 	0C030004	SW  R3, 4(R0)
--- 	1861FFFA	BNE R3,R1, dir0
--- 	0C030008	SW  R3, 8(R0)
-signal RAM : RamType := (  			X"14010005", X"08020000", X"08050004", X"00000000", X"00000000", X"04451800", X"00000000", X"00000000", -- posiciones 0,1,2,3,4,5,6,7
-									X"0C030004", X"1861FFF7", X"0C030008", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", --posicones 8,9,...
+--RAM test la
+--	08010000	LW  R1, 0(R0)												
+--	00000000	nop															  
+--	20040008	LA  R4, 8(R0) //da 8																
+--	20230009	LA  R3, 9(R1) //da A		  															
+--	00000000	nop								
+--	00000000	nop								
+--	1003FFF9	beq r0, r3, dir0	//no salta												  
+--	0C830004	SW  R3, 0(R4)		//guarda A en la dir 8																																	
+signal RAM : RamType := (  			X"08010000", X"00000000", X"20040008", X"20230009", X"00000000", X"00000000", X"1003FFF9", X"0C830000",  -- posiciones 0,1,2,3,4,5,6,7
+									X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000",  --posicones 8,9,...
 									X"20000000", X"20000000", X"30018001", X"02AD6093", X"30008001", X"00000001", X"20000000", X"30002001",
 									X"00010900", X"20000000", X"30004000", X"5000102D", X"01000300", X"80000400", X"10000000", X"00000000",
 									X"00002000", X"00000000", X"00000000", X"00000002", X"00000000", X"00000000", X"00000000", X"00000002",

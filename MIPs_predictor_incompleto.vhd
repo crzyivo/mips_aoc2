@@ -320,7 +320,7 @@ cmp_eq <= '1' when (busA=busB) else '0';
 cmp_ne <= '0' when (busA=busB) else '1';
 with IR_ID(31 downto 26) select
 Z <= cmp_eq when "000100",
-	 cmp_ne when "000110",
+	 cmp_ne when "000101",
 	 '0' when others;
 
 
@@ -356,7 +356,7 @@ saltar <= Branch AND Z;
 ------------------------------------
 -- Prediccion de saltos: Comprobación de la predicción realizada:
 -- las señales están a cero. Tenéis que diseñar vosotros la lógica necesaria para cada caso
-address_error <= '1' when DirSalto_ID /= address_predicted_ID else '0';
+address_error <= '1' when DirSalto_ID /= address_predicted_ID else '0'; --Se ignora el error de direccion si no se salta
 decission_error <= '1' when saltar /= prediction_ID else '0' ;
 -- Ha habido un error si el predictor tomó la decisión contraria (decission error) o si se decidió saltar pero se saltó a una dirección incorrecta
 predictor_error <= '1' when Branch='1' AND (decission_error='1' OR address_error='1') else '0';
