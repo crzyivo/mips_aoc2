@@ -413,22 +413,40 @@ Z <= cmp_eq when "000100",
 riesgo_rs_lw_uso <= '0' when (IR_ID(31 downto 26)="000000")
 			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(25 downto 21))
 			else '0';
-riesgo_rt_lw_uso <= '0' when IR_ID(31 downto 26)="000000" else '1' when MemRead_EX='1' AND RW_EX=IR_ID(20 downto 16) else '0'; 
+riesgo_rt_lw_uso <= '0' when (IR_ID(31 downto 26)="000000") 
+			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(20 downto 16))
+			else '0'; 
 riesgo_lw_uso <= riesgo_rs_lw_uso or riesgo_rt_lw_uso;
 
 -- Detectar riesgos en los beq:
-riesgo_beq_rs_d1 <= '1' when (IR_ID(31 downto 26)="000100" AND RW_EX=IR_ID(25 downto 21) AND RegWrite_EX='1') else '0';
-riesgo_beq_rs_d2 <= '1' when (IR_ID(31 downto 26)="000100" AND RW_MEM=IR_ID(25 downto 21) AND RegWrite_MEM='1') else '0';
-riesgo_beq_rt_d1 <= '1' when (IR_ID(31 downto 26)="000100" AND RW_EX=IR_ID(20 downto 16) AND RegWrite_EX='1') else '0';
-riesgo_beq_rt_d2 <= '1' when (IR_ID(31 downto 26)="000100" AND RW_MEM=IR_ID(20 downto 16) AND RegWrite_MEM='1') else '0';
+riesgo_beq_rs_d1 <= '1' when (IR_ID(31 downto 26)="000100" AND RW_EX=IR_ID(25 downto 21) 
+			      AND RegWrite_EX='1') 
+			else '0';
+riesgo_beq_rs_d2 <= '1' when (IR_ID(31 downto 26)="000100" AND RW_MEM=IR_ID(25 downto 21) 
+			      AND RegWrite_MEM='1') 
+			else '0';
+riesgo_beq_rt_d1 <= '1' when (IR_ID(31 downto 26)="000100" AND RW_EX=IR_ID(20 downto 16) 
+			      AND RegWrite_EX='1') 
+			else '0';
+riesgo_beq_rt_d2 <= '1' when (IR_ID(31 downto 26)="000100" AND RW_MEM=IR_ID(20 downto 16) 
+			      AND RegWrite_MEM='1') 
+			else '0';
 
 riesgo_beq <= riesgo_beq_rs_d1 or riesgo_beq_rs_d2 or riesgo_beq_rt_d1 or riesgo_beq_rt_d2;
 
 -- Detectar riesgos en los bne:
-riesgo_bne_rs_d1 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_EX=IR_ID(25 downto 21) AND RegWrite_EX='1') else '0';
-riesgo_bne_rs_d2 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_MEM=IR_ID(25 downto 21) AND RegWrite_MEM='1') else '0';
-riesgo_bne_rt_d1 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_EX=IR_ID(20 downto 16) AND RegWrite_EX='1') else '0';
-riesgo_bne_rt_d2 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_MEM=IR_ID(20 downto 16) AND RegWrite_MEM='1') else '0';
+riesgo_bne_rs_d1 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_EX=IR_ID(25 downto 21) 
+			      AND RegWrite_EX='1') 
+			else '0';
+riesgo_bne_rs_d2 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_MEM=IR_ID(25 downto 21) 
+			      AND RegWrite_MEM='1') 
+			else '0';
+riesgo_bne_rt_d1 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_EX=IR_ID(20 downto 16) 
+			      AND RegWrite_EX='1') 
+			else '0';
+riesgo_bne_rt_d2 <= '1' when (IR_ID(31 downto 26)="000101" AND RW_MEM=IR_ID(20 downto 16)
+			      AND RegWrite_MEM='1')
+			else '0';
 
 riesgo_bne <= riesgo_bne_rs_d1 or riesgo_bne_rs_d2 or riesgo_bne_rt_d1 or riesgo_bne_rt_d2;
 
