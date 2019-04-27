@@ -43,7 +43,7 @@ type RamType is array(0 to 127) of std_logic_vector(31 downto 0);
 --RAM test prediccion, Funciona igual que test_pred_sentido, pero ahora el error es de direccion en todas las iteraciones del bucle.
 -- Puesto que solo se usan 7 bits del PC para direccionar la memoria de instrucciones, saltamos a una direccion que implica tener la misma etiqueta en el predictor
 -- pero direcciones completamente diferentes, aunque esten leyendo la misma instruccion.
--- Comprueba el fallo de prediccion de sentido
+-- Comprueba el fallo de prediccion de direccion
 -- 	20210005 	LA R1, 4(R0)
 -- 	08020000	LW R2, 0(R0) //dir1
 -- 	08050004	LW R5, 4(R0)

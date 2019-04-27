@@ -371,7 +371,7 @@ b_predictor: branch_predictor port map ( 	clk => clk, reset => reset,
 -- Inicialmente ponemos la señal de control (PCSrc) a 0 (¡es decir este procesador no salta nunca!), tenéis que diseñar vosotros la lógica que gestione bien esta señal.
 PCSrc <= "11" when (saltar='1' AND predictor_error='1') else --Si hay que saltar pero ha fallado la prediccion, dir calculada en ID
          "10" when (saltar='0' AND predictor_error='1') else --Si no se salta (o es erronea) pero se ha predicho salto, volvemos a la ins siguiente PC4_ID
-         "01" when prediction='1' else --Se predice un salto, por lo que se carga el PC predicho
+         "01" when prediction='1' AND (IR_in(31 downto 26)="000100" OR IR_in(31 downto 26)="000101")  else --Se predice un salto, por lo que se carga el PC predicho
          "00";  --No se esta saltando o la prediccion era correcta, avanzamos normal PC+4
 muxPC: mux4_1 port map (Din0 => PC4, DIn1 => address_predicted, Din2 => PC4_ID, DIn3 => DirSalto_ID, ctrl => PCSrc, Dout => PC_in);
 -----------------------------------
@@ -452,7 +452,7 @@ saltar <= Branch AND Z;
 ------------------------------------
 -- Prediccion de saltos: Comprobación de la predicción realizada:
 -- las señales están a cero. Tenéis que diseñar vosotros la lógica necesaria para cada caso
-address_error <= '1' when DirSalto_ID /= address_predicted_ID else '0'; --Se ignora el error de direccion si no se salta
+address_error <= '1' when DirSalto_ID /= address_predicted_ID else '0';
 decission_error <= '1' when saltar /= prediction_ID else '0' ;
 -- Ha habido un error si el predictor tomó la decisión contraria (decission error) o si se decidió saltar pero se saltó a una dirección incorrecta
 predictor_error <= '1' when Branch='1' AND (decission_error='1' OR address_error='1') else '0';
