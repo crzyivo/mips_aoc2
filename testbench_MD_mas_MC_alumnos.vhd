@@ -56,13 +56,13 @@ end COMPONENT;
 	  	reset <= '0';
 	  	RE <= '1';
 	  	Addr <= conv_std_logic_vector(64, 32); -- Debe ser un fallo de lectura
-	  	wait for 1ns;
+	  	wait for 1ns ;
     	if Mem_ready = '0' then 
 			wait until Mem_ready ='1'; --Este wait espera hasta que se ponga Mem_ready a uno
 	  	end if;
 		wait for clk_period;
       	Addr <= conv_std_logic_vector(68, 32); --Debe ser un acierto de lectura
-	  	wait for 1ns;
+	  	wait for 1ns ;
       	if Mem_ready = '0' then 
 			wait until Mem_ready ='1'; 
 	  	end if;
@@ -71,11 +71,11 @@ end COMPONENT;
 		RE <= '0';
 		WE <= '1';
 		-- La idea de estos wait es esperar a que la señal Mem_ready se active (y si ya está activa no hacer nada)
-		wait for 1ns;
+		wait for 1ns ;
         if Mem_ready = '0' then 
 			wait until Mem_ready ='1'; 
 	  	end if;
-	  	wait for 1ns;
+	  	wait for 1ns ;
         -- a veces un pulso espureo (en este caso en mem_ready) puede hacer que vuestro banco de pruebas se adelante. 
         -- si esperamos un ns desaparecerá el pulso espureo, pero no el real
 	  	if Mem_ready = '0' then 
@@ -85,11 +85,11 @@ end COMPONENT;
 		Addr <= conv_std_logic_vector(96, 32); --Debe ser un fallo de escritura 
 		RE <= '0';
 		WE <= '1';
-		wait for 1ns;
+		wait for 1ns ;
         if Mem_ready = '0' then 
 			wait until Mem_ready ='1'; 
 	  	end if;
-		wait for 1ns;
+		wait for 1ns ;
         -- a veces un pulso espureo (en este caso en mem_ready) puede hacer que vuestro banco de pruebas se adelante. 
         -- si esperamos un ns desaparecerá el pulso espureo, pero no el real
 	  	if Mem_ready = '0' then 
@@ -99,11 +99,11 @@ end COMPONENT;
 		Addr <= conv_std_logic_vector(128, 32); --Debe ser un fallo de lectura y lanzar un reemplazo de bloque sucio
 		RE <= '1';
 		WE <= '0';
-		wait for 1ns;
+		wait for 1ns ;
       	if Mem_ready = '0' then 
 			wait until Mem_ready ='1'; 
 	  	end if;
-       	wait for 1ns;
+       	wait for 1ns ;
         -- a veces un pulso espureo (en este caso en mem_ready) puede hacer que vuestro banco de pruebas se adelante. 
         -- si esperamos un ns desaparecerá el pulso espureo, pero no el real
 	  	if Mem_ready = '0' then 
@@ -113,7 +113,7 @@ end COMPONENT;
 		Addr <= conv_std_logic_vector(64, 32); --Debe ser un fallo de lectura y lanzar un reemplazo
 		RE <= '1';
 		WE <= '0';
-		wait for 1ns;
+		wait for 1ns ;
     	if Mem_ready = '0' then 
 			wait until Mem_ready ='1'; 
 	  	end if;
