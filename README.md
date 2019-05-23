@@ -1,6 +1,7 @@
 # Instrucciones del Proyecto 2
 ```
-En la P2 hay que trabajar con el procesador de la P1 pero sustituyendo el componente de memoria de datos por el la nueva jerarquía de memoria con MC y MD conectados por un bus.
+En la P2 hay que trabajar con el procesador de la P1 pero sustituyendo el componente de memoria de datos
+por el la nueva jerarquía de memoria con MC y MD conectados por un bus.
 Para ello hay que quitar el componente
 component memoriaRAM_D is port (
 		CLK : in std_logic;
