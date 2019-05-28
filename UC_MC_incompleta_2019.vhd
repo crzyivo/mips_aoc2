@@ -67,7 +67,7 @@ component counter_2bits is
 end component;		           
 -------------------------------------------------------------------------------------------------
 -- poner en el siguiente type el nombre de vuestros estados
-type state_type is (Inicio, otros_estados); 
+type state_type is (Inicio, MD_write,MD_write_rdy); 
 signal state, next_state : state_type; 
 signal last_word: STD_LOGIC; --se activa cuando se está pidiendo la última palabra de un bloque
 signal count_enable: STD_LOGIC; -- se activa si se ha recibido una palabra de un bloque para que se incremente el contador de palabras
@@ -120,6 +120,49 @@ palabra <= palabra_UC;
         if (state = Inicio and RE= '0' and WE= '0') then -- si no piden nada no hacemos nada
 				next_state <= Inicio;
 				ready <= '1';
+		elsif (state = Inicio and WE='1' and hit='0') then --Tenemos fallo en escritura, escribimos directamente en MD
+					ready <= '0';
+					Frame <='1';
+					next_state <= MD_write;
+					MC_bus_Rd_Wr <= '1';
+					MC_send_addr <='1';
+					inc_wm <='1';
+		elsif (state=Inicio and hit='1') then --Tenemos acierto
+				ready <= '1';
+				next_state <= Inicio; --Si resulta acierto, pero ha sido casualidad, no hacemos nada mas
+				if(RE='1') then
+					MC_RE <= '1'; --Si era acierto en lectura, leemos de cache y vale
+				end if;
+				if(WE='1') then --Si es acierto de escritura, escribimos en cache y paramos hasta haber realizado la escritura en MD
+					ready <= '0';
+					Frame <='1';
+					next_state <= MD_write;
+					MC_WE<= '1';
+					MC_bus_Rd_Wr <= '1';
+					MC_send_addr <='1';
+					inc_wh <='1';
+				end if;
+		elsif (state=MD_write and Bus_DevSel='0') then --Se realiza una escritura en MD, pero aun no esta listo MD
+				Frame <='1';
+				next_state <= MD_write;
+				MC_bus_Rd_Wr <= '1';
+				MC_send_addr <='1';
+		elsif (state=MD_write and Bus_DevSel='1') then --Se realiza escritura y se reconoze la direccion, procedemos a enviar dato
+				Frame <='1';
+				next_state <= MD_write_rdy;
+				MC_bus_Rd_Wr <='1';
+				MC_send_data <= '1';
+		elsif (state=MD_write_rdy and bus_TRDY='1') then --Se realiza la escritura en MD, volvemos a Inicio y dejamos continuar a MIPS
+				next_state <=Inicio;
+				ready <='1';
+		elsif (state=MD_write_rdy and bus_TRDY='0') then --MD no esta lista para escribir, mantenemos el dato en el bus
+				next_state<= MD_write_rdy;
+				Frame <='1';
+				next_state <= MD_write_rdy;
+				MC_bus_Rd_Wr <='1';
+				MC_send_data <= '1';
+
+
    	-- Poner aquí las condiciones de vuestra máquina de estado
 	--  elsif() then
    	--  else
