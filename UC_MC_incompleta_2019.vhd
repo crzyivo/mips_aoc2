@@ -130,7 +130,7 @@ palabra <= palabra_UC;
 		elsif (state=Inicio and RE= '1' and hit='0') then --Tenemos fallo en lectura, paramos y pedimos bloque a MD
 					ready <='0';
 					MC_send_addr <='1';
-					next_state <= MD_read;
+					next_state <= MD_read_rdy;
 					inc_rm <='1';
 					block_addr <='1';
 		elsif (state=Inicio and hit='1') then --Tenemos acierto
