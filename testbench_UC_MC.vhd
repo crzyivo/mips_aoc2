@@ -75,7 +75,7 @@ end component;
 	  	wait for 20 ns;	
 	  	reset <= '0';
 	  	--Estado Inicio, no llega nada
-	  	wait for 1ns ;
+	  	wait for 20 ns ;
 	  	RE <= '1';
 	  	hit <='1';
 	  	--Hit en lectura
@@ -88,7 +88,7 @@ end component;
       	WE <='1';
       	hit <='1';
       	--Hit en escritura, paso al estado MD_write y se levanta MC_WE, espero a frame
-	  	wait for 1ns ;
+	  	wait for 1 ns ;
       	if frame = '0' then 
 			wait until frame ='1'; 
 	  	end if;
@@ -103,12 +103,18 @@ end component;
 		wait for 20 ns;
 		Bus_TRDY <= '1';
 		-- La idea de estos wait es esperar a que la señal Mem_ready se active (y si ya está activa no hacer nada)
-		wait for 1ns ;
+		wait for 1 ns ;
         if ready = '0' then 
 			wait until ready ='1'; 
 	  	end if;
-	  	wait for 1ns ;
-	  	wait;
+
+	    	hit <= '0';
+  	   	RE <= '0';
+		WE <= '0';		
+		Bus_DevSel <= '0';
+	  	wait for 20 ns ;
+		bus_TRDY <= '0';
+	  	wait until ready ='0';
    end process;
 
 
