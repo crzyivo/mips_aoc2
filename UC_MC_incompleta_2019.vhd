@@ -186,7 +186,7 @@ palabra <= palabra_UC;
 					MC_tags_WE <='1';
 				end if;
 				if(last_word='1') then --Fin de recepcion de bloque
-					state <= Cooldown;
+					next_state <= Cooldown;
 					Replace_block <='1';
 				end if;
 		elsif (state=Cooldown) then --Ciclo extra para mantener Frame a 0 y no confundir a MD_cont
