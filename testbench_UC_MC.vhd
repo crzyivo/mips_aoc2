@@ -104,17 +104,15 @@ end component;
 		Bus_TRDY <= '1';
 		-- La idea de estos wait es esperar a que la señal Mem_ready se active (y si ya está activa no hacer nada)
 		wait for 1 ns ;
-        if ready = '0' then 
-			wait until ready ='1'; 
-	  	end if;
-
-	    	hit <= '0';
+	    hit <= '0';
   	   	RE <= '0';
 		WE <= '0';		
 		Bus_DevSel <= '0';
 	  	wait for 20 ns ;
 		bus_TRDY <= '0';
-	  	wait until ready ='0';
+	  	if ready = '0' then 
+			wait until ready ='1'; 
+	  	end if;
    end process;
 
 

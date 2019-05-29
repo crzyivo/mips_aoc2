@@ -67,7 +67,7 @@ component counter_2bits is
 end component;		           
 -------------------------------------------------------------------------------------------------
 -- poner en el siguiente type el nombre de vuestros estados
-type state_type is (Inicio, MD_write,MD_write_rdy); 
+type state_type is (Inicio, MD_write,MD_write_rdy,Cooldown); 
 signal state, next_state : state_type; 
 signal last_word: STD_LOGIC; --se activa cuando se está pidiendo la última palabra de un bloque
 signal count_enable: STD_LOGIC; -- se activa si se ha recibido una palabra de un bloque para que se incremente el contador de palabras
@@ -153,14 +153,17 @@ palabra <= palabra_UC;
 				MC_bus_Rd_Wr <='1';
 				MC_send_data <= '1';
 		elsif (state=MD_write_rdy and bus_TRDY='1') then --Se realiza la escritura en MD, volvemos a Inicio y dejamos continuar a MIPS
-				next_state <=Inicio;
-				ready <='1';
+				next_state <=Cooldown;
 		elsif (state=MD_write_rdy and bus_TRDY='0') then --MD no esta lista para escribir, mantenemos el dato en el bus
 				next_state<= MD_write_rdy;
 				Frame <='1';
-				next_state <= MD_write_rdy;
 				MC_bus_Rd_Wr <='1';
 				MC_send_data <= '1';
+		elsif (state=Cooldown) then
+				next_state<=Inicio;
+				Frame <='0';
+				ready <='1';
+
 
 
    	-- Poner aquí las condiciones de vuestra máquina de estado
