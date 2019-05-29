@@ -160,7 +160,9 @@ palabra <= palabra_UC;
 				MC_send_data <= '1';
 		elsif (state=MD_write and bus_TRDY='1') then --Se realiza la escritura en MD, volvemos a Inicio y dejamos continuar a MIPS
 				next_state <=Cooldown;
-				ready <= '1';
+				Frame <= '1';
+				MC_bus_Rd_Wr <='1';
+				MC_send_data <= '1';
 		elsif (state=MD_write and bus_TRDY='0') then --MD no esta lista para escribir, mantenemos el dato en el bus
 				next_state<= MD_write;
 				Frame <='1';
@@ -206,4 +208,3 @@ palabra <= palabra_UC;
  
    
 end Behavioral;
-
