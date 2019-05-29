@@ -67,7 +67,7 @@ component counter_2bits is
 end component;		           
 -------------------------------------------------------------------------------------------------
 -- poner en el siguiente type el nombre de vuestros estados
-type state_type is (Inicio, MD_write,MD_write_rdy,Cooldown); 
+type state_type is (Inicio, MD_write,MD_write_rdy,MD_read_rdy,MD_read,Cooldown); 
 signal state, next_state : state_type; 
 signal last_word: STD_LOGIC; --se activa cuando se está pidiendo la última palabra de un bloque
 signal count_enable: STD_LOGIC; -- se activa si se ha recibido una palabra de un bloque para que se incremente el contador de palabras
@@ -123,10 +123,16 @@ palabra <= palabra_UC;
 		elsif (state = Inicio and WE='1' and hit='0') then --Tenemos fallo en escritura, escribimos directamente en MD
 					ready <= '0';
 					Frame <='1';
-					next_state <= MD_write;
+					next_state <= MD_write_rdy;
 					MC_bus_Rd_Wr <= '1';
 					MC_send_addr <='1';
 					inc_wm <='1';
+		elsif (state=Inicio and RE= '1' and hit='0') then --Tenemos fallo en lectura, paramos y pedimos bloque a MD
+					ready <='0';
+					MC_send_addr <='1';
+					next_state <= MD_read;
+					inc_rm <='1';
+					block_addr <='1';
 		elsif (state=Inicio and hit='1') then --Tenemos acierto
 				ready <= '1';
 				next_state <= Inicio; --Si resulta acierto, pero ha sido casualidad, no hacemos nada mas
@@ -136,30 +142,54 @@ palabra <= palabra_UC;
 				if(WE='1') then --Si es acierto de escritura, escribimos en cache y paramos hasta haber realizado la escritura en MD
 					ready <= '0';
 					Frame <='1';
-					next_state <= MD_write;
+					next_state <= MD_write_rdy;
 					MC_WE<= '1';
 					MC_bus_Rd_Wr <= '1';
 					MC_send_addr <='1';
 					inc_wh <='1';
 				end if;
-		elsif (state=MD_write and Bus_DevSel='0') then --Se realiza una escritura en MD, pero aun no esta listo MD
-				Frame <='1';
-				next_state <= MD_write;
-				MC_bus_Rd_Wr <= '1';
-				MC_send_addr <='1';
-		elsif (state=MD_write and Bus_DevSel='1') then --Se realiza escritura y se reconoze la direccion, procedemos a enviar dato
+		elsif (state=MD_write_rdy and Bus_DevSel='0') then --Se realiza una escritura en MD, pero aun no esta listo MD
 				Frame <='1';
 				next_state <= MD_write_rdy;
+				MC_bus_Rd_Wr <= '1';
+				MC_send_addr <='1';
+		elsif (state=MD_write_rdy and Bus_DevSel='1') then --Se realiza escritura y se reconoze la direccion, procedemos a enviar dato
+				Frame <='1';
+				next_state <= MD_write;
 				MC_bus_Rd_Wr <='1';
 				MC_send_data <= '1';
-		elsif (state=MD_write_rdy and bus_TRDY='1') then --Se realiza la escritura en MD, volvemos a Inicio y dejamos continuar a MIPS
+		elsif (state=MD_write and bus_TRDY='1') then --Se realiza la escritura en MD, volvemos a Inicio y dejamos continuar a MIPS
 				next_state <=Cooldown;
-		elsif (state=MD_write_rdy and bus_TRDY='0') then --MD no esta lista para escribir, mantenemos el dato en el bus
-				next_state<= MD_write_rdy;
+		elsif (state=MD_write and bus_TRDY='0') then --MD no esta lista para escribir, mantenemos el dato en el bus
+				next_state<= MD_write;
 				Frame <='1';
 				MC_bus_Rd_Wr <='1';
 				MC_send_data <= '1';
-		elsif (state=Cooldown) then
+		elsif (state=MD_read_rdy and Bus_DevSel='0') then --MD no esta lista para mandar el bloque
+				next_state <= MD_read_rdy;
+				Frame <= '1';
+				MC_send_addr <= '1';
+				block_addr <='1';
+		elsif(state=MD_read_rdy and Bus_DevSel='1') then --MD lista para mandar el bloque
+				next_state <= MD_read;
+				Frame <='1';
+		elsif (state=MD_read and bus_TRDY='0') then --Retardo en el envio de la palabra
+				Frame <='1';
+				next_state <=MD_read;
+		elsif (state=MD_read and bus_TRDY='1') then --Se envia la palabra desde MD, si es la primera escribimos el TAG
+				Frame <='1';
+				next_state <=MD_read;
+				MC_WE <= '1';
+				mux_origen <='1';
+				count_enable <='1';
+				if(palabra_UC="00") then --Primera palabra recibida, actualizo tags
+					MC_tags_WE <='1';
+				end if;
+				if(last_word='1') then --Fin de recepcion de bloque
+					state <= Cooldown;
+					Replace_block <='1';
+				end if;
+		elsif (state=Cooldown) then --Ciclo extra para mantener Frame a 0 y no confundir a MD_cont
 				next_state<=Inicio;
 				Frame <='0';
 				ready <='1';
