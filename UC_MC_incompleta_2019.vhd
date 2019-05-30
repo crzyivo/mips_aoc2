@@ -163,6 +163,7 @@ palabra <= palabra_UC;
 				Frame <= '1';
 				MC_bus_Rd_Wr <='1';
 				MC_send_data <= '1';
+				
 		elsif (state=MD_write and bus_TRDY='0') then --MD no esta lista para escribir, mantenemos el dato en el bus
 				next_state<= MD_write;
 				Frame <='1';
