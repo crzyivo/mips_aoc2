@@ -560,6 +560,11 @@ Banco_MEM_WB: Banco_WB PORT MAP ( 	ALU_out_MEM => ALU_out_MEM, ALU_out_WB => ALU
 mux_busW: mux2_1 port map (Din0 => ALU_out_WB, DIn1 => MDR, ctrl => MemtoReg_WB, Dout => busW);
 
 ------------------------------------Contadores y logica de contadores-------------------------------------------------
+inc_paradas_control <= riesgo_beq OR riesgo_bne;
+inc_paradas_datos <= riesgo_lw_uso;
+inc_paradas_memoria <= NOT Mem_ready;
+inc_mem_writes <= MemWrite_MEM AND Mem_ready;
+inc_mem_reads <= MemRead_MEM AND Mem_ready;
 cont_ciclos: counter port map (clk => clk, reset => reset, count_enable => '1' , load=> '0', D_in => "00000000", count => ciclos);	--Activo en cada ciclo
 cont_paradas_control: counter port map (clk => clk, reset => reset, count_enable => inc_paradas_control , load=> '0', D_in => "00000000", count => paradas_control); --Activo con riesgo beq y bne?
 cont_paradas_datos: counter port map (clk => clk, reset => reset, count_enable => inc_paradas_datos , load=> '0', D_in => "00000000", count => paradas_datos); --Activo con riesgo lw_uso?
