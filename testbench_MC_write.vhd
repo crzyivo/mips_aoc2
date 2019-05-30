@@ -7,10 +7,10 @@
   use IEEE.std_logic_unsigned.all;
 
 
-  ENTITY testbench_MD_mas_MC IS
-  END testbench_MD_mas_MC;
+  ENTITY testbench_MC_write IS
+  END testbench_MC_write;
 
-  ARCHITECTURE behavior OF testbench_MD_mas_MC IS 
+  ARCHITECTURE behavior OF testbench_MC_write IS 
 
   -- Component Declaration
   COMPONENT MD_mas_MC is port (
