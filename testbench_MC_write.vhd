@@ -96,7 +96,7 @@ end COMPONENT;
 			wait until Mem_ready ='1'; 
 	  	end if;
 		wait for clk_period;
-		Addr <= conv_std_logic_vector(90, 32); --Debe ser un fallo de lectura y lanzar un reemplazo
+		Addr <= conv_std_logic_vector(98, 32); --Debe ser un fallo de lectura y lanzar un reemplazo
 		RE <= '1';
 		WE <= '0';
 		wait for 1ns ;
