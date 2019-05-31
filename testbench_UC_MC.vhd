@@ -76,8 +76,10 @@ end component;
 	  	reset <= '0';
 	  	--Estado Inicio, no llega nada
 	  	wait for 20 ns ;
+	  	wait for clk_period;
 	  	RE <= '1';
 	  	hit <='1';
+	  	wait for clk_period;
 	  	--Hit en lectura
     	if ready = '0' then 
 			wait until ready ='1'; --Este wait espera hasta que se ponga Mem_ready a uno
@@ -102,9 +104,8 @@ end component;
 		--Retardo en Bus_TRDY
 		wait for 20 ns;
 		Bus_TRDY <= '1';
-		-- La idea de estos wait es esperar a que la señal Mem_ready se active (y si ya está activa no hacer nada)
+		--Fin de escritura
 		wait for 1 ns ;
-	    hit <= '0';
   	   	RE <= '0';
 		WE <= '0';		
 		Bus_DevSel <= '0';
@@ -113,6 +114,36 @@ end component;
 	  	if ready = '0' then 
 			wait until ready ='1'; 
 	  	end if;
+	  	wait for clk_period;
+	  	--El fallo en escritura funciona igual que el acierto, pero en este caso no se levanta MC_WE
+	  	WE <='1';
+      	hit <='0';
+      	--Hit en escritura, paso al estado MD_write y se levanta MC_WE, espero a frame
+	  	wait for 1 ns ;
+      	if frame = '0' then 
+			wait until frame ='1'; 
+	  	end if;
+		wait for clk_period;
+		--Espero un poco a levantar Bus_DevSel
+		wait for 20 ns;
+		Bus_DevSel <='1';
+		if MC_send_data='0' then
+			wait until MC_send_data='1';
+		end if;
+		--Retardo en Bus_TRDY
+		wait for 20 ns;
+		Bus_TRDY <= '1';
+		--Fin de escritura
+		wait for 1 ns ;
+  	   	RE <= '0';
+		WE <= '0';		
+		Bus_DevSel <= '0';
+	  	wait for 20 ns ;
+		bus_TRDY <= '0';
+	  	if ready = '0' then 
+			wait until ready ='1'; 
+	  	end if;
+	  	wait for clk_period;
    end process;
 
 
