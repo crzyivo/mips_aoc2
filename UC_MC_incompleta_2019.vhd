@@ -120,6 +120,7 @@ palabra <= palabra_UC;
         if (state = Inicio and RE= '0' and WE= '0') then -- si no piden nada no hacemos nada
 				next_state <= Inicio;
 				ready <= '1';
+
 		elsif (state = Inicio and WE='1' and hit='0') then --Tenemos fallo en escritura, escribimos directamente en MD
 					ready <= '0';
 					Frame <='1';
@@ -127,12 +128,14 @@ palabra <= palabra_UC;
 					MC_bus_Rd_Wr <= '1';
 					MC_send_addr <='1';
 					inc_wm <='1';
+
 		elsif (state=Inicio and RE= '1' and hit='0') then --Tenemos fallo en lectura, paramos y pedimos bloque a MD
 					ready <='0';
 					MC_send_addr <='1';
 					next_state <= MD_read_rdy;
 					inc_rm <='1';
 					block_addr <='1';
+
 		elsif (state=Inicio and hit='1') then --Tenemos acierto
 				ready <= '1';
 				next_state <= Inicio; --Si resulta acierto, pero ha sido casualidad, no hacemos nada mas
@@ -148,6 +151,8 @@ palabra <= palabra_UC;
 					MC_send_addr <='1';
 					inc_wh <='1';
 				end if;
+
+--------------------------------------------Escrituras: MD_write_rdy y MD_write------------------------------------------------------------------------				
 		elsif (state=MD_write_rdy and Bus_DevSel='0') then --Se realiza una escritura en MD, pero aun no esta listo MD
 				Frame <='1';
 				next_state <= MD_write_rdy;
@@ -158,17 +163,19 @@ palabra <= palabra_UC;
 				next_state <= MD_write;
 				MC_bus_Rd_Wr <='1';
 				MC_send_data <= '1';
+
 		elsif (state=MD_write and bus_TRDY='1') then --Se realiza la escritura en MD, volvemos a Inicio y dejamos continuar a MIPS
 				next_state <=Cooldown;
 				Frame <= '1';
 				MC_bus_Rd_Wr <='1';
 				MC_send_data <= '1';
-				
 		elsif (state=MD_write and bus_TRDY='0') then --MD no esta lista para escribir, mantenemos el dato en el bus
 				next_state<= MD_write;
 				Frame <='1';
 				MC_bus_Rd_Wr <='1';
 				MC_send_data <= '1';
+
+		--------------------------------------------Fallo Lectura: MD_read_rdy y MD_read------------------------------------------------------------------------
 		elsif (state=MD_read_rdy and Bus_DevSel='0') then --MD no esta lista para mandar el bloque
 				next_state <= MD_read_rdy;
 				Frame <= '1';
@@ -177,6 +184,7 @@ palabra <= palabra_UC;
 		elsif(state=MD_read_rdy and Bus_DevSel='1') then --MD lista para mandar el bloque
 				next_state <= MD_read;
 				Frame <='1';
+
 		elsif (state=MD_read and bus_TRDY='0') then --Retardo en el envio de la palabra
 				Frame <='1';
 				next_state <=MD_read;
@@ -193,17 +201,11 @@ palabra <= palabra_UC;
 					next_state <= Cooldown;
 					Replace_block <='1';
 				end if;
+--------------------------------------------CoolDown------------------------------------------------------------------------				
 		elsif (state=Cooldown) then --Ciclo extra para mantener Frame a 0 y no confundir a MD_cont
 				next_state<=Inicio;
 				Frame <='0';
 				ready <='1';
-
-
-
-   	-- Poner aquí las condiciones de vuestra máquina de estado
-	--  elsif() then
-   	--  else
-		
 		end if;
    end process;
  

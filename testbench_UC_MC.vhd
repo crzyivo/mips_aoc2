@@ -118,7 +118,6 @@ end component;
 	  	--El fallo en escritura funciona igual que el acierto, pero en este caso no se levanta MC_WE
 	  	WE <='1';
       	hit <='0';
-      	--Hit en escritura, paso al estado MD_write y se levanta MC_WE, espero a frame
 	  	wait for 1 ns ;
       	if frame = '0' then 
 			wait until frame ='1'; 
@@ -144,7 +143,38 @@ end component;
 			wait until ready ='1'; 
 	  	end if;
 	  	wait for clk_period;
+	  	--Fallo en lectura, paso al estado MD_read_rdy y levanto frame
+	  	RE <= '1';
+	  	hit <= '0';
+	  	wait for 1 ns ;
+	  	if Frame ='0' then
+  			wait until Frame='1';
+		end if;
+		wait for clk_period;
+		--Espero un poco a levantar Bus_DevSel
+		wait for 20 ns;
+		Bus_DevSel <='1';
+		wait for clk_period;
+		wait for 1 ns;
+		bus_TRDY <= '1';
+		wait for 20 ns; --Provoco un retardo en el envio del bloque
+		wait for clk_period;
+		bus_TRDY <= '0';
+		wait for 30 ns; 
+		wait for clk_period;
+		bus_TRDY <='1';
+		--Espero hasta el envio de la ultima palabra
+		if (Replace_block='0') then
+			wait until Replace_block='1';
+	 	end if;
+	 	--Fin de lectura
+	 		  	if ready = '0' then 
+			wait until ready ='1'; 
+	  	end if;
+	  	wait for clk_period;
+	  	RE <='0';
+	  	WE <='0';
+	  	bus_TRDY <= '0';
+	  	Bus_DevSel <='0';
    end process;
-
-
   END;
