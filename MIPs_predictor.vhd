@@ -441,10 +441,10 @@ Z <= cmp_eq when "000100",
 -- Riesgos de datos: os damos las señales definidas, pero están todas a cero, debéis incluir el código identifica cada riesgo
 -- Detectar lw/uso: 
 riesgo_rs_lw_uso <= '0' when (IR_ID(31 downto 26)="000000")
-			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(25 downto 21))
+			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(25 downto 21) and Mem_ready='1')
 			else '0';
 riesgo_rt_lw_uso <= '0' when (IR_ID(31 downto 26)="000000") 
-			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(20 downto 16))
+			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(20 downto 16) and Mem_ready='1')
 			else '0'; 
 riesgo_lw_uso <= riesgo_rs_lw_uso or riesgo_rt_lw_uso;
 
