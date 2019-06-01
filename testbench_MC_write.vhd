@@ -1,5 +1,6 @@
 -- TestBench Template 
-
+--Test escrituras en MC, 4 fallos en escritura en palabra 0 de cjto 0,palabra 1 de cjto 1, palabra 2 de cjto 2, palabra 3 de cjto 3.
+--Fallo en lectura para traer los bloques de MD y comprobar las escrituras. 4 aciertos en escritura para comprobar escrituras en MC en cada cjto 
   LIBRARY ieee;
   USE ieee.std_logic_1164.ALL;
   USE ieee.numeric_std.ALL;
@@ -54,23 +55,20 @@ end COMPONENT;
 		WE <= '0';
 	  	wait for 20 ns;	
 	  	reset <= '0';
-	  	RE <= '1';
-	  	Addr <= conv_std_logic_vector(64, 32); -- Debe ser un fallo de lectura
+	  	WE <= '1';
+	  	Addr <= conv_std_logic_vector(64, 32); -- Debe ser un fallo de escritura en cjto 0 palabra 0
 	  	wait for 1ns ;
     	if Mem_ready = '0' then 
 			wait until Mem_ready ='1'; --Este wait espera hasta que se ponga Mem_ready a uno
 	  	end if;
 		wait for clk_period;
-      	Addr <= conv_std_logic_vector(68, 32); --Debe ser un acierto de lectura
+      	Addr <= conv_std_logic_vector(84, 32); --Debe ser un fallo de escritura en cjto 1 palabra 1
 	  	wait for 1ns ;
       	if Mem_ready = '0' then 
 			wait until Mem_ready ='1'; 
 	  	end if;
 		wait for clk_period;
-		Addr <= conv_std_logic_vector(72, 32); --Debe ser un acierto de escritura
-		RE <= '0';
-		WE <= '1';
-		-- La idea de estos wait es esperar a que la señal Mem_ready se active (y si ya está activa no hacer nada)
+		Addr <= conv_std_logic_vector(104, 32); --Debe ser un fallo de escritura en cjto 2 palabra 2
 		wait for 1ns ;
         if Mem_ready = '0' then 
 			wait until Mem_ready ='1'; 
@@ -82,27 +80,75 @@ end COMPONENT;
 			wait until Mem_ready ='1'; 
 	  	end if;
 		wait for clk_period;
-		Addr <= conv_std_logic_vector(96, 32); --Debe ser un fallo de escritura 
-		RE <= '0';
-		WE <= '1';
+		Addr <= conv_std_logic_vector(124, 32); --Debe ser un fallo de escritura en cjto 3 palabra 3
 		wait for 1ns ;
         if Mem_ready = '0' then 
 			wait until Mem_ready ='1'; 
 	  	end if;
-		wait for 1ns ;
-        -- a veces un pulso espureo (en este caso en mem_ready) puede hacer que vuestro banco de pruebas se adelante. 
-        -- si esperamos un ns desaparecerá el pulso espureo, pero no el real
-	  	if Mem_ready = '0' then 
-			wait until Mem_ready ='1'; 
-	  	end if;
 		wait for clk_period;
-		Addr <= conv_std_logic_vector(98, 32); --Debe ser un fallo de lectura y lanzar un reemplazo
+		Addr <= conv_std_logic_vector(64, 32); --Debe ser un fallo de lectura y lanzar un reemplazo de cjto 0
 		RE <= '1';
 		WE <= '0';
 		wait for 1ns ;
     	if Mem_ready = '0' then 
 			wait until Mem_ready ='1'; 
 	  	end if;
+	  	wait for clk_period;
+	  	Addr <= conv_std_logic_vector(84, 32); --Debe ser un fallo de lectura y lanzar un reemplazo de cjto 1
+		wait for 1ns ;
+    	if Mem_ready = '0' then 
+			wait until Mem_ready ='1'; 
+	  	end if;
+	  	wait for clk_period;
+	  	Addr <= conv_std_logic_vector(104, 32); --Debe ser un fallo de lectura y lanzar un reemplazo de cjto 2
+		wait for 1ns ;
+    	if Mem_ready = '0' then 
+			wait until Mem_ready ='1'; 
+	  	end if;
+	  	wait for 1ns ;
+        -- pulso espureo 
+	  	if Mem_ready = '0' then 
+			wait until Mem_ready ='1'; 
+	  	end if;
+	  	wait for clk_period;
+	  	Addr <= conv_std_logic_vector(124, 32); --Debe ser un fallo de lectura y lanzar un reemplazo de cjto 3
+		wait for 1ns ;
+    	if Mem_ready = '0' then 
+			wait until Mem_ready ='1'; 
+	  	end if;
+	  	wait for clk_period;
+	  	--Lanzo aciertos de escritura para escribir en MD de cache
+	  	RE <='0';
+	  	WE <='1';
+	  	Addr <= conv_std_logic_vector(68, 32); -- Debe ser un acierto de escritura en cjto 0 palabra 1
+	  	wait for 1ns ;
+    	if Mem_ready = '0' then 
+			wait until Mem_ready ='1'; 
+	  	end if;
+		wait for clk_period;
+	  	Addr <= conv_std_logic_vector(88, 32); -- Debe ser un acierto de escritura en cjto 1 palabra 2
+	  	wait for 1ns ;
+    	if Mem_ready = '0' then 
+			wait until Mem_ready ='1'; 
+	  	end if;
+	  		  	wait for 1ns ;
+        -- pulso espureo 
+	  	if Mem_ready = '0' then 
+			wait until Mem_ready ='1'; 
+	  	end if;
+		wait for clk_period;
+	  	Addr <= conv_std_logic_vector(108, 32); -- Debe ser un acierto de escritura en cjto 2 palabra 3
+	  	wait for 1ns ;
+    	if Mem_ready = '0' then 
+			wait until Mem_ready ='1'; 
+	  	end if;
+		wait for clk_period;
+	  	Addr <= conv_std_logic_vector(112, 32); -- Debe ser un acierto de escritura en cjto 3 palabra 0
+	  	wait for 1ns ;
+    	if Mem_ready = '0' then 
+			wait until Mem_ready ='1'; 
+	  	end if;
+		wait for clk_period;
 	  	wait;
    end process;
 
