@@ -41,7 +41,7 @@ entity RAM_128_32_p1 is port (
 			Dout : out std_logic_vector (31 downto 0));
 end RAM_128_32_p1;
 
-architecture Behavioral of RAM_128_32 is
+architecture Behavioral of RAM_128_32_p1 is
 type RamType is array(0 to 127) of std_logic_vector(31 downto 0);
 signal RAM : RamType := (  X"00000001", X"00000002", X"00000004", X"00000000", X"FFFFFFFF", X"FFFFFFFF", X"FFFFFFFF", X"FFFFFFFF", -- posiciones 0,1,2,3,4,5,6,7
 									X"000000BB", X"11220044", X"FFFFFFFF", X"FFFFFFFF", X"AA995566", X"20000000", X"30008001", X"00000007", --posicones 8,9,...
