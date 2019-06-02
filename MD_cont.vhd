@@ -56,6 +56,16 @@ component RAM_128_32 is port (
 		  RE : in std_logic;		-- read enable		  
 		  Dout : out std_logic_vector (31 downto 0));
 end component;
+-- RAM con los mismos datos almacenados que el proyecto 1, para comprobar tests
+component RAM_128_32_p1 is port (
+		  CLK : in std_logic;
+		  enable: in std_logic; --solo se lee o escribe si enable está activado
+		  ADDR : in std_logic_vector (31 downto 0); --Dir 
+          Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
+          WE : in std_logic;		-- write enable	
+		  RE : in std_logic;		-- read enable		  
+		  Dout : out std_logic_vector (31 downto 0));
+end component;
 
 component reg7 is
     Port ( Din : in  STD_LOGIC_VECTOR (6 downto 0);
