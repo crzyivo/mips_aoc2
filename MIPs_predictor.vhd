@@ -415,7 +415,7 @@ PCSrc <= "11" when (saltar='1' AND predictor_error='1') else --Si hay que saltar
 muxPC: mux4_1 port map (Din0 => PC4, DIn1 => address_predicted, Din2 => PC4_ID, DIn3 => DirSalto_ID, ctrl => PCSrc, Dout => PC_in);
 -----------------------------------
 --Cambiar esta linea por la memoria de instrucciones del test
-Mem_I: memoriaRAM_I_pred_sentido PORT MAP (CLK => CLK, ADDR => PC_out, Din => cero, WE => '0', RE => '1', Dout => IR_in); 
+Mem_I: memoriaRAM_I_lw_sw PORT MAP (CLK => CLK, ADDR => PC_out, Din => cero, WE => '0', RE => '1', Dout => IR_in); 
 --------------------------------------------------------------
 -- Prediccion de saltos: Anulación de la instrucción. Si en ID se detecta un error la instrucción que se acaba de leer se anula. Para ello se sustituye su código por el de una nop
 -- La siguiente línea es un mux descrito de forma funcional
@@ -453,7 +453,7 @@ riesgo_rs_lw_uso <= '0' when (IR_ID(31 downto 26)="000000")
 			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(25 downto 21) AND Mem_ready='1')
 			else '0';
 riesgo_rt_lw_uso <= '0' when (IR_ID(31 downto 26)="000000") 
-			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(20 downto 16) AND Mem_ready='1')
+			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(20 downto 16) AND Mem_ready='1' AND IR_ID(31 downto 26)/="000010")
 			else '0'; 
 riesgo_lw_uso <= riesgo_rs_lw_uso or riesgo_rt_lw_uso;
 
