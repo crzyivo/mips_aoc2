@@ -200,7 +200,7 @@ MD_addr(31 downto 9) <= "00000000000000000000000";
 ---------------------------------------------------------------------------
 
 
-MD: RAM_128_32 PORT MAP (CLK => CLK, enable => MD_enable, ADDR => MD_addr, Din => Bus_AD, WE =>  MEM_WE, RE => Bus_RE, Dout => MD_Dout);
+MD: RAM_128_32_p1 PORT MAP (CLK => CLK, enable => MD_enable, ADDR => MD_addr, Din => Bus_AD, WE =>  MEM_WE, RE => Bus_RE, Dout => MD_Dout);
 
 
 end Behavioral;
