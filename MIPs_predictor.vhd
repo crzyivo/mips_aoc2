@@ -355,14 +355,14 @@ component counter is
 		   count : out  STD_LOGIC_VECTOR (7 downto 0));
 end component;	
 
-signal load_PC, RegWrite_ID, RegWrite_EX, RegWrite_MEM, RegWrite_WB, Z,cmp_eq,cmp_ne, Branch, RegDst_ID, RegDst_EX, ALUSrc_ID, ALUSrc_EX: std_logic;
-signal MemtoReg_ID, MemtoReg_EX, MemtoReg_MEM, MemtoReg_WB, MemWrite_ID, MemWrite_EX, MemWrite_MEM, MemRead_ID, MemRead_EX, MemRead_MEM: std_logic;
+signal load_PC,load_TEST, RegWrite_ID, RegWrite_EX, RegWrite_MEM,RegWrite_TEST, RegWrite_WB, Z,cmp_eq,cmp_ne, Branch, RegDst_ID, RegDst_EX, ALUSrc_ID, ALUSrc_EX: std_logic;
+signal MemtoReg_ID, MemtoReg_EX, MemtoReg_MEM,MemtoReg_TEST, MemtoReg_WB, MemWrite_ID, MemWrite_EX,MemWriteTEST, MemWrite_MEM, MemRead_ID, MemRead_EX,MemRead_TEST, MemRead_MEM: std_logic;
 signal PC_in, PC_out, four, cero, PC4, DirSalto_ID, IR_in, IR_ID, PC4_ID, inm_ext_EX, Mux_out, IR_bancoID_in : std_logic_vector(31 downto 0);
-signal BusW, BusA, BusB, BusA_EX, BusB_EX, BusB_MEM, inm_ext, inm_ext_x4, ALU_out_EX, ALU_out_MEM, ALU_out_WB, Mem_out, MDR, address_predicted, address_predicted_ID, branch_address_in : std_logic_vector(31 downto 0);
+signal BusW, BusA, BusB, BusA_EX, BusB_EX,BusB_TEST, BusB_MEM, inm_ext, inm_ext_x4, ALU_out_EX, ALU_out_TEST,ALU_out_MEM, ALU_out_WB, Mem_out,Mem_out_TEST, MDR, address_predicted, address_predicted_ID, branch_address_in : std_logic_vector(31 downto 0);
 signal prediction, prediction_in, update_predictor, prediction_ID, predictor_error, address_error, decission_error, saltar : std_logic;
 signal riesgo_beq, riesgo_beq_rt_d2, riesgo_beq_rt_d1, riesgo_beq_rs_d2, riesgo_beq_rs_d1,riesgo_bne, riesgo_bne_rt_d2, riesgo_bne_rt_d1, riesgo_bne_rs_d2, riesgo_bne_rs_d1,
 	   riesgo_lw_uso, riesgo_rt_lw_uso, riesgo_rs_lw_uso, avanzar_ID,avanzar_MEM: std_logic;
-signal RW_EX, RW_MEM, RW_WB, Reg_Rd_EX, Reg_Rt_EX, Reg_Rs_EX: std_logic_vector(4 downto 0);
+signal RW_EX,RW_TEST, RW_MEM, RW_WB, Reg_Rd_EX, Reg_Rt_EX, Reg_Rs_EX: std_logic_vector(4 downto 0);
 signal ALUctrl_ID, ALUctrl_EX : std_logic_vector(2 downto 0);
 signal Op_code_ID: std_logic_vector(5 downto 0);
 signal PCSrc: std_logic_vector(1 downto 0);
@@ -441,10 +441,10 @@ Z <= cmp_eq when "000100",
 -- Riesgos de datos: os damos las señales definidas, pero están todas a cero, debéis incluir el código identifica cada riesgo
 -- Detectar lw/uso: 
 riesgo_rs_lw_uso <= '0' when (IR_ID(31 downto 26)="000000")
-			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(25 downto 21))
+			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(25 downto 21) AND Mem_ready='1')
 			else '0';
 riesgo_rt_lw_uso <= '0' when (IR_ID(31 downto 26)="000000") 
-			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(20 downto 16))
+			else '1' when (MemRead_EX='1' AND RW_EX=IR_ID(20 downto 16) AND Mem_ready='1')
 			else '0'; 
 riesgo_lw_uso <= riesgo_rs_lw_uso or riesgo_rt_lw_uso;
 
@@ -562,7 +562,7 @@ mux_busW: mux2_1 port map (Din0 => ALU_out_WB, DIn1 => MDR, ctrl => MemtoReg_WB,
 
 ------------------------------------Contadores y logica de contadores-------------------------------------------------
 inc_paradas_control <= riesgo_beq OR riesgo_bne;
-inc_paradas_datos <= riesgo_lw_uso;
+inc_paradas_datos <= riesgo_lw_uso AND Mem_ready;
 inc_paradas_memoria <= NOT Mem_ready;
 inc_mem_writes <= MemWrite_MEM AND Mem_ready;
 inc_mem_reads <= MemRead_MEM AND Mem_ready;

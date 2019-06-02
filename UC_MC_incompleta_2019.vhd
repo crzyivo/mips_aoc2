@@ -205,6 +205,7 @@ palabra <= palabra_UC;
 		elsif (state=Cooldown) then --Ciclo extra para mantener Frame a 0 y no confundir a MD_cont
 				next_state<=Inicio;
 				Frame <='0';
+				ready <='1';
 		end if;
    end process;
  
