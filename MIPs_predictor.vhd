@@ -181,6 +181,15 @@ component memoriaRAM_I_pred_dir is port (
 		Dout : out std_logic_vector (31 downto 0));
 end component;
 
+component memoriaRAM_I_lw_sw is port (
+    CLK : in std_logic;
+    ADDR : in std_logic_vector (31 downto 0); --Dir 
+        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
+        WE : in std_logic;    -- write enable 
+    RE : in std_logic;    -- read enable      
+    Dout : out std_logic_vector (31 downto 0));
+end component;
+
 component Banco_ID is
  Port ( IR_in : in  STD_LOGIC_VECTOR (31 downto 0); -- instrucción leida en IF
         PC4_in:  in  STD_LOGIC_VECTOR (31 downto 0); -- PC+4 sumado en IF

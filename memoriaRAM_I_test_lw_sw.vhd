@@ -4,7 +4,7 @@
 -- 
 -- Create Date:    10:38:16 04/08/2014 
 -- Design Name: 
--- Module Name:    memoriaRAM_I_pred_sentido - Behavioral 
+-- Module Name:    memoriaRAM_I_lw_sw - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,16 +29,16 @@ use ieee.std_logic_unsigned.all;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity memoriaRAM_I_pred_sentido is port (
+entity memoriaRAM_I_lw_sw is port (
 		  CLK : in std_logic;
 		  ADDR : in std_logic_vector (31 downto 0); --Dir 
         Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
         WE : in std_logic;		-- write enable	
 		  RE : in std_logic;		-- read enable		  
 		  Dout : out std_logic_vector (31 downto 0));
-end memoriaRAM_I_pred_sentido;
+end memoriaRAM_I_lw_sw;
 
-architecture Behavioral of memoriaRAM_I_pred_sentido is
+architecture Behavioral of memoriaRAM_I_lw_sw is
 type RamType is array(0 to 127) of std_logic_vector(31 downto 0);
 --RAM test de loads y stores en cache. Primero se cargan las direcciones a usar en registros mediante la.
 -- Fallo de lectura en bloque de cjto 2 del cual usaremos los datos para escrituras
@@ -69,7 +69,6 @@ type RamType is array(0 to 127) of std_logic_vector(31 downto 0);
 -- 	0C490004	000011 00010 01001 0000000000000100 SW R9, 4(R2) //Acierto W 04 en palabra 1
 -- 	0C6B0004	000011 00011 01011 0000000000000100 SW R11, 4(R3) //Fallo R R11->F1
 -- 	088C000C	000010 00100 01100 0000000000001100 LW R12, C(R4) //Fallo R R12->02
-00001000100011000000000000001100
 signal RAM : RamType := (  			X"20010000", X"20020010", X"20030050", X"20040090", X"20050020", X"200600F1", X"08A70000", X"0C270000", -- posiciones 0,1,2,3,4,5,6,7
 									X"0C470000", X"0C660004", X"08280000", X"08480000", X"08280000", X"08290004", X"082A0008", X"0848000C", --posicones 8,9,...
 									X"0C490004", X"0C6B0004", X"088C000C", X"00000000", X"00000000", X"00000000", X"00000000", X"00000000",
