@@ -79,61 +79,7 @@ component MD_mas_MC is port (
           ); --salida que puede leer el MIPS
 end component;
 
-component memoriaRAM_I is port (
-		CLK : in std_logic;
-		ADDR : in std_logic_vector (31 downto 0); --Dir 
-        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
-        WE : in std_logic;		-- write enable	
-		RE : in std_logic;		-- read enable		  
-		Dout : out std_logic_vector (31 downto 0));
-end component;
-
 component memoriaRAM_I_full is port (
-		CLK : in std_logic;
-		ADDR : in std_logic_vector (31 downto 0); --Dir 
-        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
-        WE : in std_logic;		-- write enable	
-		RE : in std_logic;		-- read enable		  
-		Dout : out std_logic_vector (31 downto 0));
-end component;
-
-component memoriaRAM_I_bne_nops is port (
-		CLK : in std_logic;
-		ADDR : in std_logic_vector (31 downto 0); --Dir 
-        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
-        WE : in std_logic;		-- write enable	
-		RE : in std_logic;		-- read enable		  
-		Dout : out std_logic_vector (31 downto 0));
-end component;
-
-component memoriaRAM_I_bne is port (
-		CLK : in std_logic;
-		ADDR : in std_logic_vector (31 downto 0); --Dir 
-        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
-        WE : in std_logic;		-- write enable	
-		RE : in std_logic;		-- read enable		  
-		Dout : out std_logic_vector (31 downto 0));
-end component;
-
-component memoriaRAM_I_la_nops is port (
-		CLK : in std_logic;
-		ADDR : in std_logic_vector (31 downto 0); --Dir 
-        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
-        WE : in std_logic;		-- write enable	
-		RE : in std_logic;		-- read enable		  
-		Dout : out std_logic_vector (31 downto 0));
-end component;
-
-component memoriaRAM_I_la is port (
-		CLK : in std_logic;
-		ADDR : in std_logic_vector (31 downto 0); --Dir 
-        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
-        WE : in std_logic;		-- write enable	
-		RE : in std_logic;		-- read enable		  
-		Dout : out std_logic_vector (31 downto 0));
-end component;
-
-component memoriaRAM_I_pred_sentido_nops is port (
 		CLK : in std_logic;
 		ADDR : in std_logic_vector (31 downto 0); --Dir 
         Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
@@ -150,24 +96,6 @@ component memoriaRAM_I_pred_sentido is port (
 		RE : in std_logic;		-- read enable		  
 		Dout : out std_logic_vector (31 downto 0));
 end component;	
-		
-component memoriaRAM_I_pred_dir_nops is port (
-		CLK : in std_logic;
-		ADDR : in std_logic_vector (31 downto 0); --Dir 
-        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
-        WE : in std_logic;		-- write enable	
-		RE : in std_logic;		-- read enable		  
-		Dout : out std_logic_vector (31 downto 0));
-end component;
-
-component memoriaRAM_I_pred_dir is port (
-		CLK : in std_logic;
-		ADDR : in std_logic_vector (31 downto 0); --Dir 
-        Din : in std_logic_vector (31 downto 0);--entrada de datos para el puerto de escritura
-        WE : in std_logic;		-- write enable	
-		RE : in std_logic;		-- read enable		  
-		Dout : out std_logic_vector (31 downto 0));
-end component;
 
 component memoriaRAM_I_lw_sw is port (
     CLK : in std_logic;
