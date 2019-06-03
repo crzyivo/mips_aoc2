@@ -168,7 +168,7 @@ end component;
 			wait until Replace_block='1';
 	 	end if;
 	 	--Fin de lectura
-	 		  	if ready = '0' then 
+	  	if ready = '0' then 
 			wait until ready ='1'; 
 	  	end if;
 	  	wait for clk_period;
